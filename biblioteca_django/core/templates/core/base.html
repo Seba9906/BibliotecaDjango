@@ -23,6 +23,11 @@
                         <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'altaLibro' %}">Carga de Libro</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -54,28 +59,5 @@
     
 
     <script src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biblioteca Django - {% block title %}Biblioteca Django{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'core/css/base.css' %}">
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-    <header>     
-    </header>
-    <nav>    
-    </nav>
-    <main>
-        {% block content %}{% endblock %}
-
-    </main>
-    <footer>
-    </footer>
 </body>
 </html>

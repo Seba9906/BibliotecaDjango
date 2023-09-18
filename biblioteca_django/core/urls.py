@@ -3,4 +3,6 @@ from . import views
 
 urlpatterns = [
     path('inicio', views.index, name='index'),
+    path('Modificacion/AltaLibro',views.altaLIbro,name='altaLibro'),
 ]
+    

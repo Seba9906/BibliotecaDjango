@@ -40,3 +40,14 @@ def libro_detalle(request, id_libro):
         return render(request, "core/libro_detalle.html", {"libro": libro})
     else:
         return HttpResponse("Libro no encontrado")
+
+
+def index(request):
+    return render(request, "core/index.html")
+
+
+def altaLIbro(request):
+    context = {
+        "fecha": datetime.now(),
+    }
+    return render(request, "core/altaLibro.html", context)

@@ -1,0 +1,71 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/prestamos.css' %}">
+{%endblock%}
+<body>
+  <h1>Préstamo de Libros</h1>
+<form action="/guardar_prestamo" method="POST">
+  <!-- Formulario para realizar un nuevo préstamo -->
+  <label for="titulo">Título del Libro:</label>
+
+        <input type="text" id="titulo" name="titulo" required>
+        <br>
+
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required>
+        <br>
+
+       
+        <!-- Información del Usuario -->
+        <label for="nombre_usuario">Nombre del Usuario:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+        <br>
+
+       
+
+        <!-- Fecha de Préstamo -->
+        <label for="fecha_prestamo">Fecha de Préstamo:</label>
+        <input type="date" id="fecha_prestamo" name="fecha_prestamo" required>
+        <br>
+
+       
+
+        <!-- Botón para Enviar el Formulario -->
+        <input type="submit" value="Guardar Préstamo">
+      </form>
+   
+
+  <!-- Lista de préstamos existentes -->
+  <h2>Préstamos Actuales</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Libro</th>
+        <th>Usuario</th>
+        <th>Fecha de Préstamo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prestamo in prestamos %}
+      {% filter  upper %}
+        <tr>
+          <td>{{ prestamo.0 }}</td>
+          <td>{{ prestamo.1 }}</td>
+          <td>{{ prestamo.2 }}</td>
+         
+        </tr>
+        {% endfilter %}
+       
+      {% empty %}
+        <tr>
+          <td colspan="3">No hay préstamos registrados.</td>
+        </tr>
+      
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+{% endblock %}

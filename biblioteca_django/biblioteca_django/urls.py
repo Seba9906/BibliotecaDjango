@@ -20,5 +20,5 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('biblioteca_django/', include('core.urls')),
+    path('', include('core.urls')),
 ]

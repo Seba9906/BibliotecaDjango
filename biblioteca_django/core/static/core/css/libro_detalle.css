@@ -1,0 +1,22 @@
+img {
+    width: 50%;
+}
+
+.libro-grid {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "portada info-basica info-basica"
+      "portada info-basica info-basica"
+      "detalles detalles detalles";
+  }
+  
+  .portada { grid-area: portada; }
+  
+  .info-basica { grid-area: info-basica; }
+  
+  .detalles { grid-area: detalles; }
+  
+  

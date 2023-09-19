@@ -19,14 +19,14 @@ libros = {
         "titulo": "Libro 1",
         "autor": "Autor 1",
         "anio_publicacion": 2021,
-        "imagen": "biblioteca_django\core\static\core\imagenes\images.jpeg",
+        "imagen": "\static\core\imagenes\don-quijote-de-la-mancha.webp",
         "genero": "Ficción",
     },
     2: {
         "titulo": "Libro 2",
         "autor": "Autor 2",
         "anio_publicacion": 2022,
-        "imagen": "\static\core\imagenes\images.jpeg",
+        "imagen": "\static\core\imagenes\lotr.jpeg",
         "genero": "Fantasía",
     },
 }

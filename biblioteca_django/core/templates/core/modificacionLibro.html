@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
+{% endblock %}
+{% block title %} Modificar Libro {% endblock %}
+{% block section_title %}Modificacion de libro{% endblock %}
+{% block content %}
+    <form action="">
+        {% csrf_token %}
+        {{modificacionLibro_form}}      
+
+        <input type="submit">
+    </form>
+    
+{% endblock %}

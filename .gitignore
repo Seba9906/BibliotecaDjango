@@ -1,7 +1,4 @@
 venv/
-<<<<<<< Updated upstream
-MiEntvenv/
-=======
 ENV/
 env.bak/
 venv.bak/
@@ -39,4 +36,3 @@ cython_debug/
 MiEntvenv/
 venv/
 MiEntornoVirtual
->>>>>>> Stashed changes

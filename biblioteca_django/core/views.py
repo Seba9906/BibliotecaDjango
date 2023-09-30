@@ -2,21 +2,14 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-<<<<<<< Updated upstream
-# Create your views here.
-=======
 from .forms import ModificacionLibroForm
 from django.contrib import messages
 
-
-def index(request):
-    return render(request, "core/index.html")
-
->>>>>>> Stashed changes
-
 def altaLIbro(request):
     context = {
-        'fecha': datetime.now(),
+        "fecha": datetime.now(),
+    }
+    return render(request, "core/altaLibro.html", context)
 
 def modificacionLibro(request):
 
@@ -42,7 +35,5 @@ def modificacionLibro(request):
 
 
 
-    }
 
-
-    return render(request,"core/altaLibro.html", context)
+    

@@ -4,8 +4,33 @@ from django.urls import reverse
 from datetime import datetime
 from .forms import ModificacionLibroForm
 from django.contrib import messages
+from .forms import PrestamoForm  # Importa tu formulario
 
+def prestamo_form(request):
+    if request.method == 'POST':
+        form = PrestamoForm(request.POST)
+        if form.is_valid():
+            # Procesa el formulario si es válido
+            # Por ejemplo, puedes guardar los datos en la base de datos
+            #titulo = form.cleaned_data['titulo']
+            #autor = form.cleaned_data['autor']
+            #fecha_prestamo = form.cleaned_data['fecha_prestamo']
+            #nombre_usuario = form.cleaned_data['nombre_usuario']
 
+            messages.info(request,"El prestamo fue guardado correctamente")
+
+            return redirect(reverse("prestamos")) 
+
+        else:
+            errores = form.errors
+            print(errores)
+            return  render(request, 'core/prestamos.html', {'form': form, 'errores': errores})
+
+    else:
+        # Si es una solicitud GET, crea un formulario vacío
+        form = PrestamoForm()
+     
+        return  render(request, 'core/prestamos.html')
 def index(request):
     return render(request, "core/index.html")
 
@@ -71,11 +96,18 @@ def v_prestamos(request):
     prestamos=[]
     prestamos.append(['Cien Años de Soledad','Juan Perez','28/05/1975'])
     prestamos.append(['Django dese Cero','Juan Perez','28/05/1975'])
+    form = PrestamoForm()
     context = {
-        'prestamos': prestamos
+        'prestamos': prestamos,
+        'form': form,
         
 
     }
+        # Crea una instancia del formulario
+  
+
+
+    # Renderiza la plantilla 'mi_template.html' con el contexto
     return render(request, "core/prestamos.html", context)
    
 

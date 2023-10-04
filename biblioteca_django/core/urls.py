@@ -7,5 +7,6 @@ urlpatterns = [
     path('prestamos', views.v_prestamos,name='prestamos'),
     path('usuario', views.usuario_perfil, name= 'usuario_perfil'),
     path("libro_detalle/<int:id_libro>/", views.libro_detalle, name="libro_detalle"),
+    path('prestamos_form', views.prestamo_form,name='prestamos_form'),
 ]
 

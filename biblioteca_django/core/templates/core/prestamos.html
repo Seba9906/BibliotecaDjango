@@ -7,35 +7,48 @@
 {%endblock%}
 <body>
   <h1>Préstamo de Libros</h1>
-<form action="/guardar_prestamo" method="POST">
-  <!-- Formulario para realizar un nuevo préstamo -->
-  <label for="titulo">Título del Libro:</label>
+  <form method="post" action="{% url 'prestamos_form' %}">
+    {% csrf_token %}
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}  
+    <!-- Campo Título del Libro -->
+    <div>
+        {{ form.titulo.label_tag }}
+        {{ form.titulo }}
+        {{ form.titulo.errors }}
+    </div>
 
-        <input type="text" id="titulo" name="titulo" required>
-        <br>
+    <!-- Campo Autor -->
+    <div>
+        {{ form.autor.label_tag }}
+        {{ form.autor }}
+        {{ form.autor.errors }}
+    </div>
 
-        <label for="autor">Autor:</label>
-        <input type="text" id="autor" name="autor" required>
-        <br>
+  
+    <!-- Campo Nombre del Usuario -->
+    <div>
+        {{ form.nombre_usuario.label_tag }}
+        {{ form.nombre_usuario }}
+        {{ form.nombre_usuario.errors }}
+    </div>
+ <!-- Campo Fecha de Préstamo -->
+ <div>
+  {{ form.fecha_prestamo.label_tag }}
+  {{ form.fecha_prestamo }}
+  {{ form.fecha_prestamo.errors }}
+</div>
 
-       
-        <!-- Información del Usuario -->
-        <label for="nombre_usuario">Nombre del Usuario:</label>
-        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
-        <br>
-
-       
-
-        <!-- Fecha de Préstamo -->
-        <label for="fecha_prestamo">Fecha de Préstamo:</label>
-        <input type="date" id="fecha_prestamo" name="fecha_prestamo" required>
-        <br>
-
-       
-
-        <!-- Botón para Enviar el Formulario -->
-        <input type="submit" value="Guardar Préstamo">
-      </form>
+    <!-- Botón de Enviar -->
+    <div>
+        <input type="submit" value="Enviar">
+    </div>
+</form>
    
 
   <!-- Lista de préstamos existentes -->

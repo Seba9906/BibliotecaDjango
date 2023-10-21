@@ -3,8 +3,18 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ModificacionLibroForm
+<<<<<<< HEAD
 from django.contrib import messages
 from .forms import PrestamoForm  # Importa tu formulario
+=======
+from .forms import AltaLibroForm
+from django.contrib import messages
+from .forms import PrestamoForm  # Importa tu formulario
+from .forms import RegistroUsuarioForm
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView
+>>>>>>> main
 
 def prestamo_form(request):
     if request.method == 'POST':
@@ -17,6 +27,27 @@ def prestamo_form(request):
             #fecha_prestamo = form.cleaned_data['fecha_prestamo']
             #nombre_usuario = form.cleaned_data['nombre_usuario']
 
+<<<<<<< HEAD
+=======
+
+
+class RegistroUsuarioView(CreateView):
+    form_class = RegistroUsuarioForm
+    success_url = reverse_lazy("index")  # Cambia 'inicio' por la URL de tu página de inicio.
+    template_name = 'core/registro.html'
+
+def prestamo_form(request):
+    if request.method == 'POST':
+        form = PrestamoForm(request.POST)
+        if form.is_valid():
+            # Procesa el formulario si es válido
+            # Por ejemplo, puedes guardar los datos en la base de datos
+            #titulo = form.cleaned_data['titulo']
+            #autor = form.cleaned_data['autor']
+            #fecha_prestamo = form.cleaned_data['fecha_prestamo']
+            #nombre_usuario = form.cleaned_data['nombre_usuario']
+
+>>>>>>> main
             messages.info(request,"El prestamo fue guardado correctamente")
 
             return redirect(reverse("prestamos")) 
@@ -36,10 +67,50 @@ def index(request):
 
 
 def altaLIbro(request):
-    context = {
-        "fecha": datetime.now(),
+    
+    if request.method == 'POST':
+        #instancia con datos
+        FormularioALta = AltaLibroForm(request.POST)
+        #validacion
+        if FormularioAlta.is_valid():
+            #Mensaje de validacion
+
+            messages.info(request,"Su operacion fue ejecutada con exito")
+
+            return redirect(reverse("altaLibro")) 
+    
+    else: #GET    
+        FormularioAlta = AltaLibroForm()
+
+    context={
+        "altaLibro_form" : FormularioAlta
+
     }
-    return render(request, "core/altaLibro.html", context)
+    return render(request,"core/altaLibro.html", context)
+
+
+def modificacionLibro(request):
+
+    if request.method == 'POST':
+        #instancia con datos
+        FormularioModificacion = ModificacionLibroForm(request.POST)
+        #validacion
+        if FormularioModificacion.is_valid():
+            #Mensaje de validacion
+
+            messages.info(request,"Su operacion fue ejecutada con exito")
+
+            return redirect(reverse("modificacionLibro")) 
+    
+    else: #GET    
+        FormularioModificacion = ModificacionLibroForm()
+
+    context={
+        "modificacionLibro_form" : FormularioModificacion
+
+    }
+    return render(request,"core/modificacionLibro.html", context)
+
 
 def modificacionLibro(request):
 

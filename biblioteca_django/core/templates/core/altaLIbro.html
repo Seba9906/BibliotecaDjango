@@ -1,30 +1,35 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'core/css/altaLibro.css' %}"> 
+  <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
 {% endblock %}
 {% block title %} Alta Libro {% endblock %}
 {% block section_title %}Carga de libro{% endblock %}
 {% block content %}
-    
-    <form action="" class="formulario_alta">
-        <h2 class="formulario_titulo">Carga de Libro</h2>
-        <input type="text" class="formulario_alta_input">
-        <label for="" class="formulario_alta_label">Titulo</label>
-        <input type="text" class="formulario_alta_input">
-        <label for="" class="formulario_alta_label">Editorial</label>
-        <input type="text" class="formulario_alta_input">
-        <label for="" class="formulario_alta_label">Fecha de edicion</label>
-        <input type="text" class="formulario_alta_input">
-        <label for="" class="formulario_alta_label">Autor</label>
-        <input type="text" class="formulario_alta_input">
-        <label for="" class="formulario_alta_label">Genero</label>
-        <input type="text" id="campo fijo" name="campo fijo" value="Fecha Carga: {{fecha}}" readonly class="formulario_alta_input">
-        <label for="campo fijo" class=""></label>
-        <input type="submit" class="formulario_alta_submit">
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
 
+<<<<<<< HEAD
     </form>
         <script src="{% static 'core/js/altaLibro.js' %}"></script>
+=======
+
+
+<form method="post" action="{% url 'altaLibro' %}">
+    {% csrf_token %}
+    <div class="formularioModificacion">
+      <h2 class="formulario_titulo">Carga de Libro</h2>
+          {{altaLibro_form}}
+      <input type="submit" value="Crear" class="boton">
+    </div>   
+</form>
+   
+>>>>>>> main
 {% endblock %}
 
     

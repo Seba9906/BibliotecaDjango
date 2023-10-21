@@ -52,8 +52,6 @@ class ModificacionLibroForm(forms.Form):
 
         return self.cleaned_data  
 
-
-
 class PrestamoForm(forms.Form):
     titulo = forms.CharField(label='Título del Libro', max_length=100, required=True)
     autor = forms.CharField(label='Autor', max_length=100, required=True)
@@ -67,4 +65,5 @@ class PrestamoForm(forms.Form):
         if fecha_prestamo > date.today():
             raise forms.ValidationError("La fecha de préstamo debe ser igual o anterior a la feha actual")
         return fecha_prestamo
+    
     

@@ -2,6 +2,16 @@ from django import forms
 from datetime import datetime
 from django.core.exceptions import ValidationError
 from datetime import date  # Importa la clase 'date' de la biblioteca 'datetime'
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .models import Usuario
+
+
+
+class RegistroUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['email', 'nombre', 'apellido', 'direccion']
 
 
 class AltaLibroForm(forms.Form):

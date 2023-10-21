@@ -4,7 +4,7 @@ from django.urls import reverse
 from datetime import datetime
 from .forms import ModificacionLibroForm
 from django.contrib import messages
-from .forms import PrestamoForm  # Importa tu formulario
+from .forms import PrestamoForm  
 
 def prestamo_form(request):
     if request.method == 'POST':

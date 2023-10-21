@@ -5,6 +5,18 @@ from datetime import datetime
 from .forms import ModificacionLibroForm
 from django.contrib import messages
 from .forms import PrestamoForm  # Importa tu formulario
+from .forms import RegistroUsuarioForm
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView
+
+
+
+
+class RegistroUsuarioView(CreateView):
+    form_class = RegistroUsuarioForm
+    success_url = reverse_lazy("index")  # Cambia 'inicio' por la URL de tu página de inicio.
+    template_name = 'core/registro.html'
 
 def prestamo_form(request):
     if request.method == 'POST':

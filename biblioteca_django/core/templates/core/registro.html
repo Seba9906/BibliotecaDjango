@@ -1,0 +1,18 @@
+
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/prestamos.css' %}">
+{%endblock%}
+<body>
+  
+    <form method="post">
+        <h2>Registro de Usuario</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+{% endblock %}

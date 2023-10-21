@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ModificacionLibroForm
+from .forms import AltaLibroForm
 from django.contrib import messages
-from .forms import PrestamoForm  
+from .forms import PrestamoForm  # Importa tu formulario
 
 def prestamo_form(request):
     if request.method == 'POST':
@@ -36,10 +37,27 @@ def index(request):
 
 
 def altaLIbro(request):
-    context = {
-        "fecha": datetime.now(),
+    
+    if request.method == 'POST':
+        #instancia con datos
+        FormularioALta = AltaLibroForm(request.POST)
+        #validacion
+        if FormularioAlta.is_valid():
+            #Mensaje de validacion
+
+            messages.info(request,"Su operacion fue ejecutada con exito")
+
+            return redirect(reverse("altaLibro")) 
+    
+    else: #GET    
+        FormularioAlta = AltaLibroForm()
+
+    context={
+        "altaLibro_form" : FormularioAlta
+
     }
-    return render(request, "core/altaLibro.html", context)
+    return render(request,"core/altaLibro.html", context)
+
 
 def modificacionLibro(request):
 

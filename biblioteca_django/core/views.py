@@ -3,10 +3,6 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ModificacionLibroForm
-<<<<<<< HEAD
-from django.contrib import messages
-from .forms import PrestamoForm  # Importa tu formulario
-=======
 from .forms import AltaLibroForm
 from django.contrib import messages
 from .forms import PrestamoForm  # Importa tu formulario
@@ -14,22 +10,18 @@ from .forms import RegistroUsuarioForm
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
->>>>>>> main
 
 def prestamo_form(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
         if form.is_valid():
+            pass
             # Procesa el formulario si es válido
             # Por ejemplo, puedes guardar los datos en la base de datos
             #titulo = form.cleaned_data['titulo']
             #autor = form.cleaned_data['autor']
             #fecha_prestamo = form.cleaned_data['fecha_prestamo']
             #nombre_usuario = form.cleaned_data['nombre_usuario']
-
-<<<<<<< HEAD
-=======
-
 
 class RegistroUsuarioView(CreateView):
     form_class = RegistroUsuarioForm
@@ -47,7 +39,6 @@ def prestamo_form(request):
             #fecha_prestamo = form.cleaned_data['fecha_prestamo']
             #nombre_usuario = form.cleaned_data['nombre_usuario']
 
->>>>>>> main
             messages.info(request,"El prestamo fue guardado correctamente")
 
             return redirect(reverse("prestamos")) 

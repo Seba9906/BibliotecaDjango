@@ -26,9 +26,30 @@ class Usuario(models.Model):
                   raise ValidationError("El Dni contener exactamente 8 digitos")
             return self.cleaned_data['dni']
       
-class Autor():
-      pass
+class Autor(models.Model):
+      autor_id = models.AutoField(primary_key=True)
+      nombre = models.CharField(max_length=100, verbose_name="Nombre del Autor/a")
+      apellido = models.CharField(max_length=100,verbose_name="Apellido del Autor/a")
+      pais = models.CharField(max_length=100,verbose_name="Nacionalidad del Autor/a")
 
+      def clean_nombre(self):
+            nombre = self.nombre
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
+                  raise ValidationError('Nombre Invalido.')
+            return self.cleaned_data['nombre']
+
+      def clean_apellido(self):
+            apellido = self.apellido
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
+                  raise ValidationError('Apellido Invalido.')
+            return self.cleaned_data['apellido']
+      
+      def clean_pais(self):
+            pais = self.pais
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', pais):
+                  raise ValidationError('Nombre del país Invalido.')
+            return self.cleaned_data['pais']
+    
 class Libro(models.Model):
     titulo = models.CharField(max_length=255, verbose_name="Título del Libro")
     autores = models.ManyToManyField(Autor, verbose_name="Autor/a o Autor@s del Libro")

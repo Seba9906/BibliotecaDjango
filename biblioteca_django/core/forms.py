@@ -3,8 +3,6 @@ from datetime import datetime
 from django.core.exceptions import ValidationError
 from datetime import date  # Importa la clase 'date' de la biblioteca 'datetime'
 
-<<<<<<< HEAD
-=======
 from django import forms
 from .models import Usuario
 
@@ -40,7 +38,6 @@ class AltaLibroForm(forms.Form):
         return self.cleaned_data  
 
 
->>>>>>> main
 
 class ModificacionLibroForm(forms.Form):
     titulo=forms.CharField(label="Titulo del Libro", required=True)
@@ -64,11 +61,6 @@ class ModificacionLibroForm(forms.Form):
         
 
         return self.cleaned_data  
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> main
 class PrestamoForm(forms.Form):
     titulo = forms.CharField(label='Título del Libro', max_length=100, required=True)
     autor = forms.CharField(label='Autor', max_length=100, required=True)
@@ -82,8 +74,5 @@ class PrestamoForm(forms.Form):
         if fecha_prestamo > date.today():
             raise forms.ValidationError("La fecha de préstamo debe ser igual o anterior a la feha actual")
         return fecha_prestamo
-<<<<<<< HEAD
-=======
     
->>>>>>> main
     

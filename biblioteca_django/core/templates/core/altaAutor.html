@@ -3,8 +3,8 @@
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
 {% endblock %}
-{% block title %} Alta Libro {% endblock %}
-{% block section_title %}Carga de libro{% endblock %}
+{% block title %} Alta Autor {% endblock %}
+{% block section_title %}Carga de Autor{% endblock %}
 {% block content %}
 {% if messages %}
 <ul class="messages">
@@ -16,11 +16,11 @@
 
 
 
-<form method="post" action="{% url 'altaLibro' %}" enctype="multipart/form-data"> {% comment %} necesitamos este atributo para cargar la caratula {% endcomment %}
+<form method="post" action="{% url 'altaAutor' %}">
     {% csrf_token %}
     <div class="formularioModificacion">
-      <h2 class="formulario_titulo">Carga de Libro</h2>
-          {{altaLibro_form}}
+      <h2 class="formulario_titulo">Carga de Autor</h2>
+      {{form.as_p}}
       <input type="submit" value="Crear" class="boton">
     </div>   
 </form>

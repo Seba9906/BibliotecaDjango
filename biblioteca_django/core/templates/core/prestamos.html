@@ -30,13 +30,23 @@
         {{ form.autor.errors }}
     </div>
 
-  
+    <div>
+      {{ form.id_libro.label_tag }}
+      {{ form.id_libro }}
+      {{ form.id_libro.errors }}
+  </div>
     <!-- Campo Nombre del Usuario -->
     <div>
         {{ form.nombre_usuario.label_tag }}
         {{ form.nombre_usuario }}
         {{ form.nombre_usuario.errors }}
     </div>
+
+    <div>
+      {{ form.id_usuario.label_tag }}
+      {{ form.id_usuario }}
+      {{ form.id_usuario.errors }}
+  </div>
  <!-- Campo Fecha de Préstamo -->
  <div>
   {{ form.fecha_prestamo.label_tag }}

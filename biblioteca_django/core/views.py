@@ -146,6 +146,11 @@ def libro_detalle(request, id_libro):
         return render(request, "core/libro_detalle.html", {"libro": libro})
     else:
         return HttpResponse("Libro no encontrado")
+    
+# ---------------------------------------------------------------------------------------------------------------------------------
+def listaAutor(request):
+    return render(request, "core/listaAutor.html",)
+  
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def v_prestamos(request):

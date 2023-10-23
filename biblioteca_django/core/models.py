@@ -2,6 +2,19 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import timedelta
 import re
+
+GENRE_CHOICES = (
+    ('FIC', 'Ficción'),
+    ('NFIC', 'No Ficción'),
+    ('SF', 'Ciencia Ficción'),
+    ('MYST', 'Misterio'),
+    ('ROM', 'Romance'),
+    ('DRAMA', 'Drama'),
+    ('FANT', 'Fantasía'),
+    ('BIO', 'Biografía'),
+    ('ACAD', 'Artículos Académicos'),
+)
+
 class Usuario(models.Model):
       
       nombre = models.CharField(max_length=30,verbose_name="nombre")
@@ -27,11 +40,13 @@ class Usuario(models.Model):
             return self.cleaned_data['dni']
       
 class Autor(models.Model):
-      autor_id = models.AutoField(primary_key=True)
-      nombre = models.CharField(max_length=100, verbose_name="Nombre del Autor/a")
-      apellido = models.CharField(max_length=100,verbose_name="Apellido del Autor/a")
+      nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")
       pais = models.CharField(max_length=100,verbose_name="Nacionalidad del Autor/a")
+      nacimiento = models.IntegerField(verbose_name="Año de nacimiento del Autor/a")
 
+      def __str__(self):
+        return self.nombre
+      
       def clean_nombre(self):
             nombre = self.nombre
             if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
@@ -54,8 +69,8 @@ class Libro(models.Model):
     titulo = models.CharField(max_length=255, verbose_name="Título del Libro")
     autores = models.ManyToManyField(Autor, verbose_name="Autor/a o Autor@s del Libro")
     editorial = models.CharField(max_length=255,verbose_name="Editorial")
-    publicacion = models.DateField(verbose_name="fecha de publicación")
-    genero = models.CharField(max_length=255,verbose_name="Genero")
+    publicacion = models.IntegerField(verbose_name="Año de publicación")
+    genero = models.CharField(max_length=100, choices=GENRE_CHOICES)
 
     def __str__(self):
         return self.titulo

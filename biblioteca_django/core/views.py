@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
+from .models import Prestamo
+from django.db import IntegrityError
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
@@ -20,13 +23,34 @@ class RegistroUsuarioView(CreateView):
 
 def prestamo_form(request):
     if request.method == 'POST':
-        form = PrestamoForm(request.POST)
-        if form.is_valid():
-          
-            #titulo = form.cleaned_data['titulo']
-            #autor = form.cleaned_data['autor']
-            #fecha_prestamo = form.cleaned_data['fecha_prestamo']
-            #nombre_usuario = form.cleaned_data['nombre_usuario']
+        form_prestamo = PrestamoForm(request.POST)
+        if form_prestamo.is_valid():
+            try:
+                
+                libro_id=form_prestamo.cleaned_data['id_libro']
+                print('id libro')
+                print(form_prestamo.cleaned_data['id_libro'])
+                libro = Libro.objects.get(pk=libro_id)
+                print(libro.titulo)
+            except Libro.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el libro')
+                    return redirect(reverse("prestamos")) 
+            id_usuario=form_prestamo.cleaned_data['id_usuario']
+            try:
+                usuario = Usuario.objects.get(id=id_usuario)
+            except Usuario.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el usuario')
+                    return redirect(reverse("prestamos")) 
+            print(form_prestamo.cleaned_data['fecha_prestamo'])
+            #fecha_pres=datetime.str.strptime(form_prestamo.cleaned_data['fecha_prestamo'],"%Y-%m-%d") 
+            nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=form_prestamo.cleaned_data['fecha_prestamo'])
+
+            try:
+                    nuevo_prestamo.save()
+
+            except IntegrityError as ie:
+                    messages.error(request, str(ie))
+                    return redirect(reverse("prestamos")) 
 
             messages.info(request,"El prestamo fue guardado correctamente")
 
@@ -125,14 +149,19 @@ def libro_detalle(request, id_libro):
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def v_prestamos(request):
+    lst_prestamos=Prestamo.objects.all()
     prestamos=[]
-    prestamos.append(['Cien Años de Soledad','Juan Perez','28/05/1975'])
-    prestamos.append(['Django dese Cero','Juan Perez','28/05/1975'])
-    form = PrestamoForm()
+    for p in lst_prestamos:
+        prestamos.append([p.libro.titulo,p.usuario.nombre+ ' '+p.usuario.apellido,p.fecha_prestamo])
+       
+    form_prestamo = PrestamoForm()
     context = {
         'prestamos': prestamos,
-        'form': form,
+        'form': form_prestamo,
     }
+    
+   
+             
     return render(request, "core/prestamos.html", context)
    
 # ---------------------------------------------------------------------------------------------------------------------------------

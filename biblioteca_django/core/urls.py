@@ -12,7 +12,8 @@ urlpatterns = [
     path("libro_detalle/<int:id_libro>/", views.libro_detalle, name="libro_detalle"),
     path('prestamos_form', views.prestamo_form,name='prestamos_form'),
     path('registro/', RegistroUsuarioView.as_view(), name='registro'),
-    path('Modificacion/AltaAutor',AutorCreateView.as_view(),name='altaAutor')
+    path('Modificacion/AltaAutor',AutorCreateView.as_view(),name='altaAutor'),
+    
 ]
 
 

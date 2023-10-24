@@ -1,13 +1,13 @@
 /* Estilo para el encabezado h1 */
 h1 {
     font-size: 24px;
-    color: #333; /* Cambia el color del texto a tu elección */
+    color: #333; 
   }
   
-  /* Estilo para el botón */
+
   button.btn-primary {
-    background-color: #007bff; /* Cambia el color de fondo a tu elección */
-    color: #fff; /* Cambia el color del texto a tu elección */
+    background-color: #007bff; 
+    color: #fff; 
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -25,19 +25,19 @@ h1 {
   table th, table td {
     padding: 8px 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd; /* Línea de separación entre filas */
+    border-bottom: 1px solid #ddd;
   }
   
   /* Estilo para filas alternas de la tabla */
   table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Cambia el color de fondo a tu elección */
+    background-color: #f2f2f2; 
   }
   
   /* Estilo para el mensaje de "No hay préstamos registrados" */
   table td[colspan="3"] {
     text-align: center;
     font-style: italic;
-    color: #777; /* Cambia el color del texto a tu elección */
+    color: #777; 
   }
  /* Estilos generales */
 body {

@@ -2,6 +2,19 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import timedelta
 import re
+
+GENRE_CHOICES = (
+    ('FIC', 'Ficción'),
+    ('NFIC', 'No Ficción'),
+    ('SF', 'Ciencia Ficción'),
+    ('MYST', 'Misterio'),
+    ('ROM', 'Romance'),
+    ('DRAMA', 'Drama'),
+    ('FANT', 'Fantasía'),
+    ('BIO', 'Biografía'),
+    ('ACAD', 'Artículos Académicos'),
+)
+
 class Usuario(models.Model):
       
       nombre = models.CharField(max_length=30,verbose_name="nombre")
@@ -27,20 +40,37 @@ class Usuario(models.Model):
             return self.cleaned_data['dni']
       
 class Autor(models.Model):
-    nombre = models.CharField(max_length=255)
+      nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")
+      pais = models.CharField(max_length=100,verbose_name="Nacionalidad del Autor/a")
+      nacimiento = models.IntegerField(verbose_name="Año de nacimiento del Autor/a")
 
-    def __str__(self):
+      def __str__(self):
         return self.nombre
+      
+      def clean_nombre(self):
+            nombre = self.nombre
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
+                  raise ValidationError('Nombre Invalido.')
+            return self.cleaned_data['nombre']
 
+      def clean_apellido(self):
+            apellido = self.apellido
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
+                  raise ValidationError('Apellido Invalido.')
+            return self.cleaned_data['apellido']
+      
+      def clean_pais(self):
+            pais = self.pais
+            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', pais):
+                  raise ValidationError('Nombre del país Invalido.')
+            return self.cleaned_data['pais']
+    
 class Libro(models.Model):
     titulo = models.CharField(max_length=255, verbose_name="Título del Libro")
-    editorial = models.CharField(max_length=255,verbose_name="Editorial")
-    publicacion = models.IntegerField(verbose_name="fecha de publicación")
     autores = models.ManyToManyField(Autor, verbose_name="Autor/a o Autor@s del Libro")
-    stock = models.IntegerField(default=1)
-    genero = models.CharField(max_length=255,verbose_name="Genero")
-    modificacion = models.DateTimeField(auto_now=True)
-    caratula = models.ImageField(upload_to='core/static/core/imagenes',default=None)
+    editorial = models.CharField(max_length=255,verbose_name="Editorial")
+    publicacion = models.IntegerField(verbose_name="Año de publicación")
+    genero = models.CharField(max_length=100, choices=GENRE_CHOICES)
 
     def __str__(self):
         return self.titulo

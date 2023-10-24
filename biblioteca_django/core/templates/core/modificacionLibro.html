@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
+  <link rel="stylesheet" href="{% static 'core/css/form.css' %}"> 
 {% endblock %}
 {% block title %} Modificar Libro {% endblock %}
 {% block section_title %}Modificacion de libro{% endblock %}
@@ -13,8 +13,6 @@
       {% endfor %}
     </ul>
   {% endif %}
-
-    
 
     <form method="post" action="{% url 'modificacionLibro' %}">
         {% csrf_token %}

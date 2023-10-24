@@ -165,3 +165,5 @@ venv/
 MiEntornoVirtual
 biblioteca_django/core/__pycache__/urls.cpython-310.pyc
 biblioteca_django/core/__pycache__/views.cpython-310.pyc
+biblioteca_django/core/static/core/imagenes/Puma_RS-Fast.jpg
+biblioteca_django/core/static/core/imagenes/Puma_X-Ray_2_-_Negro_-_Zapatillas_Hombre_talla_42_5.jpg

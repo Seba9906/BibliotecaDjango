@@ -163,5 +163,8 @@ cython_debug/
 MiEntvenv/
 venv/
 MiEntornoVirtual
+<<<<<<< HEAD
+=======
 biblioteca_django/core/__pycache__/urls.cpython-310.pyc
 biblioteca_django/core/__pycache__/views.cpython-310.pyc
+>>>>>>> main

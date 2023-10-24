@@ -8,6 +8,7 @@ from .models import *
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 
+
 class RegistroUsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
@@ -19,6 +20,7 @@ class RegistroUsuarioForm(forms.ModelForm):
 
 class AltaLibroForm(forms.ModelForm):
     
+
     class Meta:
         model = Libro
         fields = '__all__'
@@ -72,7 +74,6 @@ class PrestamoForm(forms.Form):
     id_usuario = forms.IntegerField (label='Id usuario', required=True)
 
     def clean_fecha_prestamo(self):
-        # Valida la fecha de préstamo aquí
         fecha_prestamo = self.cleaned_data['fecha_prestamo']
         if fecha_prestamo > date.today():
             raise forms.ValidationError("La fecha de préstamo debe ser igual o anterior a la feha actual")
@@ -83,7 +84,7 @@ class PrestamoForm(forms.Form):
 class altaAutor(forms.ModelForm):
     class Meta:
         model = Autor
-        fields = ['nombre']
+        fields = ['nombre', 'nacimiento', 'pais']
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------

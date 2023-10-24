@@ -4,15 +4,16 @@
 {% block content %}
 {% load static %}
 {% block extra_css%}
-    <link rel="stylesheet" href="{% static 'core/css/prestamos.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/form.css' %}">
 {%endblock%}
 <body>
-  
+    <div class="formularioModificacion">
     <form method="post">
         <h2>Registro de Usuario</h2>
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Registrar</button>
+        <button class="boton" type="submit">Registrar</button>
     </form>
+    </div>
 </body>
 {% endblock %}

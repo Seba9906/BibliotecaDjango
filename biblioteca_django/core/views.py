@@ -2,21 +2,55 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import ModificacionLibroForm
-from .forms import AltaLibroForm
+from core.forms import *
 from django.contrib import messages
-from .forms import PrestamoForm  # Importa tu formulario
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
+from .models import Prestamo
+from django.db import IntegrityError
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+
+class RegistroUsuarioView(CreateView):
+    form_class = RegistroUsuarioForm
+    success_url = reverse_lazy("index")  
+    template_name = 'core/registro.html'
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 def prestamo_form(request):
     if request.method == 'POST':
-        form = PrestamoForm(request.POST)
-        if form.is_valid():
-            # Procesa el formulario si es válido
-            # Por ejemplo, puedes guardar los datos en la base de datos
-            #titulo = form.cleaned_data['titulo']
-            #autor = form.cleaned_data['autor']
-            #fecha_prestamo = form.cleaned_data['fecha_prestamo']
-            #nombre_usuario = form.cleaned_data['nombre_usuario']
+        form_prestamo = PrestamoForm(request.POST)
+        if form_prestamo.is_valid():
+            try:
+                
+                libro_id=form_prestamo.cleaned_data['id_libro']
+                print('id libro')
+                print(form_prestamo.cleaned_data['id_libro'])
+                libro = Libro.objects.get(pk=libro_id)
+                print(libro.titulo)
+            except Libro.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el libro')
+                    return redirect(reverse("prestamos")) 
+            id_usuario=form_prestamo.cleaned_data['id_usuario']
+            try:
+                usuario = Usuario.objects.get(id=id_usuario)
+            except Usuario.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el usuario')
+                    return redirect(reverse("prestamos")) 
+            print(form_prestamo.cleaned_data['fecha_prestamo'])
+            #fecha_pres=datetime.str.strptime(form_prestamo.cleaned_data['fecha_prestamo'],"%Y-%m-%d") 
+            nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=form_prestamo.cleaned_data['fecha_prestamo'])
+
+            try:
+                    nuevo_prestamo.save()
+
+            except IntegrityError as ie:
+                    messages.error(request, str(ie))
+                    return redirect(reverse("prestamos")) 
 
             messages.info(request,"El prestamo fue guardado correctamente")
 
@@ -28,51 +62,52 @@ def prestamo_form(request):
             return  render(request, 'core/prestamos.html', {'form': form, 'errores': errores})
 
     else:
-        # Si es una solicitud GET, crea un formulario vacío
+      
         form = PrestamoForm()
      
         return  render(request, 'core/prestamos.html')
+# ---------------------------------------------------------------------------------------------------------------------------------
+
 def index(request):
     return render(request, "core/index.html")
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 
-def altaLIbro(request):
+def AltaLibro(request):
     
     if request.method == 'POST':
-        #instancia con datos
-        FormularioALta = AltaLibroForm(request.POST)
-        #validacion
-        if FormularioAlta.is_valid():
-            #Mensaje de validacion
 
-            messages.info(request,"Su operacion fue ejecutada con exito")
+        FormularioAlta = AltaLibroForm(request.POST, request.FILES) #necesito el request files para cargar la caratula del altalibro
 
+        if FormularioAlta.is_valid():  # Correcto aquí
+            FormularioAlta.save()
+            messages.info(request, "Su operacion fue ejecutada con exito")
             return redirect(reverse("altaLibro")) 
-    
-    else: #GET    
+    else:    
         FormularioAlta = AltaLibroForm()
 
-    context={
+    context = {
         "altaLibro_form" : FormularioAlta
-
     }
-    return render(request,"core/altaLibro.html", context)
 
+    return render(request, "core/altaLibro.html", context)
+
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 def modificacionLibro(request):
 
     if request.method == 'POST':
-        #instancia con datos
+
         FormularioModificacion = ModificacionLibroForm(request.POST)
-        #validacion
+
         if FormularioModificacion.is_valid():
-            #Mensaje de validacion
+
 
             messages.info(request,"Su operacion fue ejecutada con exito")
 
             return redirect(reverse("modificacionLibro")) 
     
-    else: #GET    
+    else:   
         FormularioModificacion = ModificacionLibroForm()
 
     context={
@@ -81,6 +116,7 @@ def modificacionLibro(request):
     }
     return render(request,"core/modificacionLibro.html", context)
 
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 
 libros = {
@@ -100,6 +136,7 @@ libros = {
     },
 }
 
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 def libro_detalle(request, id_libro):
     libro = libros.get(id_libro)
@@ -109,25 +146,38 @@ def libro_detalle(request, id_libro):
         return render(request, "core/libro_detalle.html", {"libro": libro})
     else:
         return HttpResponse("Libro no encontrado")
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 def v_prestamos(request):
+    lst_prestamos=Prestamo.objects.all()
     prestamos=[]
-    prestamos.append(['Cien Años de Soledad','Juan Perez','28/05/1975'])
-    prestamos.append(['Django dese Cero','Juan Perez','28/05/1975'])
-    form = PrestamoForm()
+    for p in lst_prestamos:
+        prestamos.append([p.libro.titulo,p.usuario.nombre+ ' '+p.usuario.apellido,p.fecha_prestamo])
+       
+    form_prestamo = PrestamoForm()
     context = {
         'prestamos': prestamos,
-        'form': form,
-        
-
+        'form': form_prestamo,
     }
-        # Crea una instancia del formulario
-  
-
-
-    # Renderiza la plantilla 'mi_template.html' con el contexto
+    
+   
+             
     return render(request, "core/prestamos.html", context)
    
+# ---------------------------------------------------------------------------------------------------------------------------------
+   
+class AutorCreateView(CreateView):
+    model = Autor
+    form_class = altaAutor
+    template_name = 'core/altaAutor.html'
+    success_url = reverse_lazy('altaAutor')  
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Autor creado con éxito.')
+        return super(AutorCreateView, self).form_valid(form)
+
+    
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 #VISTA DE USUARIO Y SUS LIBROS PRESTADOS
 
@@ -162,3 +212,4 @@ def usuario_perfil(request):
     }
 
     return render(request, "core/usuario_perfil.html", context)
+# ---------------------------------------------------------------------------------------------------------------------------------

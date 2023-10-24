@@ -26,15 +26,21 @@ class Usuario(models.Model):
                   raise ValidationError("El Dni contener exactamente 8 digitos")
             return self.cleaned_data['dni']
       
-class Autor():
-      pass
+class Autor(models.Model):
+    nombre = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.nombre
 
 class Libro(models.Model):
     titulo = models.CharField(max_length=255, verbose_name="Título del Libro")
-    autores = models.ManyToManyField(Autor, verbose_name="Autor/a o Autor@s del Libro")
     editorial = models.CharField(max_length=255,verbose_name="Editorial")
-    publicacion = models.DateField(verbose_name="fecha de publicación")
+    publicacion = models.IntegerField(verbose_name="fecha de publicación")
+    autores = models.ManyToManyField(Autor, verbose_name="Autor/a o Autor@s del Libro")
+    stock = models.IntegerField(default=1)
     genero = models.CharField(max_length=255,verbose_name="Genero")
+    modificacion = models.DateTimeField(auto_now=True)
+    caratula = models.ImageField(upload_to='core/static/core/imagenes',default=None)
 
     def __str__(self):
         return self.titulo

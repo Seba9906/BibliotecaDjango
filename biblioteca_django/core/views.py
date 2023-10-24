@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
-from .models import Prestamo
+from .models import Prestamo, Autor, Libro
 from django.db import IntegrityError
 
 
@@ -149,8 +149,15 @@ def libro_detalle(request, id_libro):
     
 # ---------------------------------------------------------------------------------------------------------------------------------
 def listaAutor(request):
-    return render(request, "core/listaAutor.html",)
-  
+    autores = Autor.objects.all()
+    return render(request, "core/listaAutor.html", {'autores': autores})
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+def listaLibro(request):
+    libros = Libro.objects.all()
+    return render(request, "core/listaLibro.html", {'libros': libros})
+
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def v_prestamos(request):

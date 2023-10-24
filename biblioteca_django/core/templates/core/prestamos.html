@@ -3,9 +3,10 @@
 {% block content %}
 {% load static %}
 {% block extra_css%}
-    <link rel="stylesheet" href="{% static 'core/css/prestamos.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/form.css' %}">
 {%endblock%}
 <body>
+  <div class="formularioModificacion">
   <h1>Préstamo de Libros</h1>
   <form method="post" action="{% url 'prestamos_form' %}">
     {% csrf_token %}
@@ -60,7 +61,7 @@
     </div>
 </form>
    
-
+</div>
   <!-- Lista de préstamos existentes -->
   <h2>Préstamos Actuales</h2>
   <table class="table">

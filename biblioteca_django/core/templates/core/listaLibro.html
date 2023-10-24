@@ -6,24 +6,28 @@
 {% block title %} Ver Autores {% endblock %}
 
 {% block content %}
-<h1>Lista de Autores</h1>
+<h1>Lista de Libros</h1>
 <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre y Apellido</th>
-        <th scope="col">Nacionalidad</th>
-        <th scope="col">Año de Nacimiento</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Autor/a o Autor@s</th>
+        <th scope="col">Editorial</th>
+        <th scope="col">Año de publicación</th>
+        <th scope="col">Género</th>
       </tr>
     </thead>
     <tbody>
 
-        {% for autor in autores %}
+        {% for libro in libros %}
         <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ autor.nombre }}</td>
-        <td>{{ autor.pais }}</td>
-        <td>{{ autor.nacimiento }}</td>
+        <td>{{ libro.titulo }}</td>
+        <td>{{ libro.autores }}</td>
+        <td>{{ libro.editorial }}</td>
+        <td>{{ libro.publicacion }}</td>
+        <td>{{ libro.genero }}</td>
         </tr>
         {% endfor %}
     

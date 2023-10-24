@@ -1,18 +1,16 @@
-
-{% extends "core/base.html" %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'core/css/login.css' %}">
+{% endblock %}
 {% block content %}
-{% load static %}
-{% block extra_css%}
-    <link rel="stylesheet" href="{% static 'core/css/prestamos.css' %}">
-{%endblock%}
 <body>
-  
-    <form method="post">
-        <h2>Registro de Usuario</h2>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar</button>
-    </form>
+    <div class="login-container">
+        <form method="post">
+            <h2>Registro de Usuario</h2>
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" value="Registrar"></button>
+        </form>
+    </div>
 </body>
 {% endblock %}

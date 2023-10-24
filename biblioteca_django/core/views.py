@@ -13,11 +13,9 @@ from django.db import IntegrityError
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
-
-
 class RegistroUsuarioView(CreateView):
     form_class = RegistroUsuarioForm
-    success_url = reverse_lazy("index")  
+    success_url = reverse_lazy("login")  
     template_name = 'core/registro.html'
 # ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -177,6 +175,11 @@ class AutorCreateView(CreateView):
         return super(AutorCreateView, self).form_valid(form)
 
     
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+def login(request):
+     return render(request,'core/login.html')
+
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 #VISTA DE USUARIO Y SUS LIBROS PRESTADOS

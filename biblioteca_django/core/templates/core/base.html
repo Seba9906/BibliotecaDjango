@@ -11,6 +11,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand">Biblioteca Django</a>
@@ -18,53 +19,54 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mr-auto">
+        
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'altaLibro' %}">Carga de Libro</a>
+                
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Libros
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'altaLibro' %}">Carga de Libro</a></li>
+                            <li><a class="dropdown-item" href="{% url 'modificacionLibro' %}">Modificar Libro</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaLibro' %}">Lista de Libros</a></li>
+                        </ul>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
+        
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Autores
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'altaAutor' %}">Alta de Autores</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaAutor' %}">Lista de Autores</a></li>
+                        </ul>
+                    </li>
+        
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'prestamos' %}">Prestamos</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
+        
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'usuario_perfil' %}">Perfil de usuario</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
+        
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'modificacionLibro' %}">Modificar Libro</a>
+                        <a class="nav-link" href="{% url 'registro' %}">Registro de usuario</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
+        
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'registro' %}">Alta de Usuarios</a>
+                        <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'altaAutor' %}">Alta de Autores</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listaAutor' %}">Lista de Autores</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listaLibro' %}">Lista de Libros</a>
-                    </li>
-                </ul>
+
+                </ul>        
             </div>
         </nav>
+        
+        
     </header>
     
     <div class="container mt-4">

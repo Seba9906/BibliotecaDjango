@@ -17,6 +17,12 @@ class RegistroUsuarioView(CreateView):
     form_class = RegistroUsuarioForm
     success_url = reverse_lazy("login")  
     template_name = 'core/registro.html'
+        
+    def form_valid(self, form):
+        
+        messages.success(self.request, 'Te has registrado exitosamente!')
+        return super(RegistroUsuarioView, self).form_valid(form)
+    
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def prestamo_form(request):

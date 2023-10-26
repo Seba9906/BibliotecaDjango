@@ -3,6 +3,7 @@ from datetime import datetime
 from django.core.exceptions import ValidationError
 from datetime import date  
 from .models import *
+import re
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
@@ -10,11 +11,40 @@ from .models import *
 
 
 class RegistroUsuarioForm(forms.ModelForm):
+
+    contraseña = forms.CharField(widget=forms.PasswordInput)
+    confirmar_contraseña = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
         model = Usuario
-        fields = [ 'nombre', 'apellido', 'dni','email']
-        
-        
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        contraseña = cleaned_data.get("contraseña")
+        confirmar_contraseña = cleaned_data.get("confirmar_contraseña")
+        if contraseña and confirmar_contraseña:
+            if contraseña != confirmar_contraseña:
+                raise ValidationError("Las contraseñas no coinciden")
+        return cleaned_data
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
+            raise ValidationError('Nombre inválido.')
+        return nombre
+
+    def clean_apellido(self):
+        apellido = self.cleaned_data.get('apellido')
+        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
+            raise ValidationError('Apellido inválido.')
+        return apellido
+
+    def clean_dni(self):
+        dni = self.cleaned_data.get('dni')
+        if len(str(dni)) != 8:
+            raise ValidationError("El DNI debe contener exactamente 8 dígitos")
+        return dni
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -81,10 +111,21 @@ class PrestamoForm(forms.Form):
     
 # ---------------------------------------------------------------------------------------------------------------------------------
 
-class altaAutor(forms.ModelForm):
+class altaAutor(forms.ModelForm):  # He cambiado "altaAutor" a "AltaAutorForm" para seguir las convenciones de nombres en Python
+
     class Meta:
         model = Autor
         fields = ['nombre', 'nacimiento', 'pais']
 
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
+            raise ValidationError('Nombre inválido.')
+        return nombre
+    def clean_pais(self):
+        pais = self.cleaned_data.get('pais')
+        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', pais):
+            raise ValidationError('Nombre del país inválido.')
+        return pais
 
 # ---------------------------------------------------------------------------------------------------------------------------------

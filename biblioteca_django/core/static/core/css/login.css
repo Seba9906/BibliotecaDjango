@@ -105,9 +105,8 @@ ul.messages li {
     text-align: center;
 }
 
-ul.messages li.error {
-    background-color: rgba(255, 204, 204, 0.8); /* Color rojo claro con transparencia */
-    color: #cc0000;
+.errorlist{
+    color: red;
 }
 
 ul.messages li.success {

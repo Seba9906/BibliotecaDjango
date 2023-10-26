@@ -21,24 +21,8 @@ class Usuario(models.Model):
       apellido = models.CharField(max_length=30,verbose_name="apellido")
       dni = models.IntegerField(verbose_name="Dni", unique=True)
       email = models.EmailField(max_length=150, verbose_name="Email")
-      
-      def clean_nombre(self):
-            nombre = self.nombre
-            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
-                  raise ValidationError('Nombre Invalido.')
-            return self.cleaned_data['nombre']
-
-      def clean_apellido(self):
-            apellido = self.apellido
-            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
-                  raise ValidationError('Apellido Invalido.')
-            return self.cleaned_data['apellido']
-
-      def clean_dni(self):
-            if len(str(self.dni)) != 8:
-                  raise ValidationError("El Dni contener exactamente 8 digitos")
-            return self.cleaned_data['dni']
-      
+      contraseña = models.CharField(max_length=50,verbose_name="contraseña",default="")
+         
 class Autor(models.Model):
       nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")
       pais = models.CharField(max_length=100,verbose_name="Nacionalidad del Autor/a")
@@ -46,24 +30,6 @@ class Autor(models.Model):
 
       def __str__(self):
         return self.nombre
-      
-      def clean_nombre(self):
-            nombre = self.nombre
-            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
-                  raise ValidationError('Nombre Invalido.')
-            return self.cleaned_data['nombre']
-
-      def clean_apellido(self):
-            apellido = self.apellido
-            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
-                  raise ValidationError('Apellido Invalido.')
-            return self.cleaned_data['apellido']
-      
-      def clean_pais(self):
-            pais = self.pais
-            if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', pais):
-                  raise ValidationError('Nombre del país Invalido.')
-            return self.cleaned_data['pais']
     
 class Libro(models.Model):
     titulo = models.CharField(max_length=255, verbose_name="Título del Libro")

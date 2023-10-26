@@ -196,7 +196,10 @@ class AutorCreateView(CreateView):
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def login(request):
-     return render(request,'core/login.html')
+    if request.method == 'POST':
+        return render(request,'core/index.html')
+    return render(request,'core/login.html')
+
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 

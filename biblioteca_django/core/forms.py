@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from datetime import date  
 from .models import *
 import re
+from unidecode import unidecode
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
@@ -55,19 +56,19 @@ class AltaLibroForm(forms.ModelForm):
         model = Libro
         fields = '__all__'
 
-    def clean_Stock(self):
-        if self.cleaned_data["Stock"] > 20:
-            raise ValidationError("El stock maximo para cada libro es de 20 unidades por titulo")
-        
-        return self.cleaned_data["Stock"] 
     
-    def clean (self):
-        if self.cleaned_data["titulo"] == "Cronica de una muerte anunciada":
-            raise ValidationError("El libro seleccionado ya existe")
-        
+    def clean(self):
+        cleaned_data = super().clean()
+        titulo = cleaned_data.get("titulo")
 
-        return self.cleaned_data  
+        titulo = unidecode(titulo).lower()
 
+        libro_existente = Libro.objects.filter(titulo__iexact=titulo).exclude(pk=self.instance.pk).first()
+
+        if libro_existente:
+            raise forms.ValidationError("El libro con este título ya existe en la base de datos")
+
+        return cleaned_data
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -117,11 +118,18 @@ class altaAutor(forms.ModelForm):  # He cambiado "altaAutor" a "AltaAutorForm" p
         model = Autor
         fields = ['nombre', 'nacimiento', 'pais']
 
+
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        nombre = unidecode(nombre).lower()
+        autor_existente = Autor.objects.filter(nombre__iexact=nombre).exclude(pk=self.instance.pk).first() 
         if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
             raise ValidationError('Nombre inválido.')
+        if autor_existente:
+            raise forms.ValidationError('Ya existe un autor con este nombre en la base de datos.')
         return nombre
+       
+
     def clean_pais(self):
         pais = self.cleaned_data.get('pais')
         if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', pais):

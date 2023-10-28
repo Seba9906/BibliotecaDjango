@@ -22,6 +22,8 @@ class Usuario(models.Model):
       dni = models.IntegerField(verbose_name="Dni", unique=True)
       email = models.EmailField(max_length=150, verbose_name="Email")
       contraseña = models.CharField(max_length=50,verbose_name="contraseña",default="")
+      def __str__(self):
+        return self.nombre
          
 class Autor(models.Model):
       nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")
@@ -51,3 +53,8 @@ class Prestamo(models.Model):
         if not self.fecha_devolucion:
             self.fecha_devolucion = self.fecha_prestamo + timedelta(days=14)
         super(Prestamo, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Prestamo de {self.libro} a {self.usuario} retirado {self.fecha_prestamo} devolucion {self.fecha_devolucion}"
+
+       

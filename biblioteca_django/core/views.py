@@ -8,17 +8,21 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
-from .models import Prestamo
+from .models import Prestamo, Autor, Libro
 from django.db import IntegrityError
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
-
-
 class RegistroUsuarioView(CreateView):
     form_class = RegistroUsuarioForm
-    success_url = reverse_lazy("index")  
+    success_url = reverse_lazy("login")  
     template_name = 'core/registro.html'
+        
+    def form_valid(self, form):
+        
+        messages.success(self.request, 'Te has registrado exitosamente!')
+        return super(RegistroUsuarioView, self).form_valid(form)
+    
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def prestamo_form(request):
@@ -146,6 +150,18 @@ def libro_detalle(request, id_libro):
         return render(request, "core/libro_detalle.html", {"libro": libro})
     else:
         return HttpResponse("Libro no encontrado")
+    
+# ---------------------------------------------------------------------------------------------------------------------------------
+def listaAutor(request):
+    autores = Autor.objects.all()
+    return render(request, "core/listaAutor.html", {'autores': autores})
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+def listaLibro(request):
+    libros = Libro.objects.all()
+    return render(request, "core/listaLibro.html", {'libros': libros})
+
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 def v_prestamos(request):
@@ -177,6 +193,14 @@ class AutorCreateView(CreateView):
         return super(AutorCreateView, self).form_valid(form)
 
     
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+def login(request):
+    if request.method == 'POST':
+        return render(request,'core/index.html')
+    return render(request,'core/login.html')
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 #VISTA DE USUARIO Y SUS LIBROS PRESTADOS

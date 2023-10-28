@@ -1,0 +1,115 @@
+body {
+    background-image: url('/static/core/imagenes/login.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff; /* Color de texto blanco */
+}
+
+form {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre elementos del formulario */
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center;     /* Centra el contenido horizontalmente */
+    height: 100vh;           /* Ocupa toda la altura de la pantalla */
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form input[type="password"] {
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: rgba(68, 68, 68, 0.8); /* Color de fondo del input con transparencia */
+    color: #fff; /* Color del texto del input */
+    transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus,
+form input[type="password"]:focus {
+    border-color: #00c07d; /* Color verde cuando el input está enfocado */
+}
+
+form input[type="submit"] {
+    padding: 10px;
+    background-color: #00c07d; /* Color verde del botón */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #009e6a; /* Color verde oscuro cuando el botón es "hovered" */
+}
+
+a {
+    color: grey; 
+    text-decoration: none;
+}
+
+a:hover {
+    color:#00c07d;
+    text-decoration: underline;
+}
+
+/* Estilos adicionales para el registro */
+.registro {
+    margin-top: 20px;
+}
+
+.registro p {
+    font-size: 20px;
+    color: grey;
+}
+
+.registro a:hover {
+    color: #00c07d;
+}
+
+/* Estilos para los mensajes */
+ul.messages {
+    list-style-type: none;
+    padding-left: 0;
+    width: 300px;
+    margin-top: 15px;
+}
+
+ul.messages li {
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.errorlist{
+    color: red;
+}
+
+ul.messages li.success {
+    background-color: rgba(212, 237, 218, 0.8); /* Color verde claro con transparencia */
+    color: #155724;
+}

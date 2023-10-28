@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
+{% endblock %}
+{% block title %} Ver Autores {% endblock %}
+
+{% block content %}
+<h1>Lista de Autores</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre y Apellido</th>
+        <th scope="col">Nacionalidad</th>
+        <th scope="col">Año de Nacimiento</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for autor in autores %}
+        <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ autor.nombre }}</td>
+        <td>{{ autor.pais }}</td>
+        <td>{{ autor.nacimiento }}</td>
+        </tr>
+        {% endfor %}
+    
+    </tbody>
+  </table>
+    
+
+{% endblock %}

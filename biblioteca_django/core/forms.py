@@ -96,13 +96,23 @@ class ModificacionLibroForm(forms.Form):
         return self.cleaned_data  
 # ---------------------------------------------------------------------------------------------------------------------------------
 class PrestamoForm(forms.Form):
-    titulo = forms.CharField(label='Título del Libro', max_length=100)
-    autor = forms.CharField(label='Autor', max_length=100, required=True)
-    id_libro = forms.IntegerField(label='Id Libro',required=True)
+    #titulo = forms.CharField(label='Título del Libro', max_length=100)
+    #autor = forms.CharField(label='Autor', max_length=100, required=True)
+    id_libro = forms.ModelChoiceField(
+        label='Libro',
+        queryset=Libro.objects.all(),
+        to_field_name='id',
+        empty_label=None
+    )
     fecha_prestamo = forms.DateField(label='Fecha de Prestamo',  
     initial=date.today(),  widget= forms.widgets.DateInput(attrs={'type':'date'}))
-    nombre_usuario = forms.CharField(label='Nombre del Usuario', max_length=100)
-    id_usuario = forms.IntegerField (label='Id usuario', required=True)
+    #nombre_usuario = forms.CharField(label='Nombre del Usuario', max_length=100)
+    id_usuario = forms.ModelChoiceField(
+        label='Usuario',
+        queryset=Usuario.objects.all(),
+        to_field_name='id',
+        empty_label=None
+    )
 
     def clean_fecha_prestamo(self):
         fecha_prestamo = self.cleaned_data['fecha_prestamo']

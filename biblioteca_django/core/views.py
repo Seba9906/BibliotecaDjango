@@ -30,41 +30,31 @@ def prestamo_form(request):
         form_prestamo = PrestamoForm(request.POST)
         if form_prestamo.is_valid():
             try:
-                
-                libro_id=form_prestamo.cleaned_data['id_libro']
-                print('id libro')
-                print(form_prestamo.cleaned_data['id_libro'])
-                libro = Libro.objects.get(pk=libro_id)
-                print(libro.titulo)
-            except Libro.DoesNotExist as ie:
-                    messages.error(request,'No se encontró el libro')
-                    return redirect(reverse("prestamos")) 
-            id_usuario=form_prestamo.cleaned_data['id_usuario']
-            try:
-                usuario = Usuario.objects.get(id=id_usuario)
-            except Usuario.DoesNotExist as ie:
-                    messages.error(request,'No se encontró el usuario')
-                    return redirect(reverse("prestamos")) 
-            print(form_prestamo.cleaned_data['fecha_prestamo'])
-            #fecha_pres=datetime.str.strptime(form_prestamo.cleaned_data['fecha_prestamo'],"%Y-%m-%d") 
-            nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=form_prestamo.cleaned_data['fecha_prestamo'])
+                libro = form_prestamo.cleaned_data['id_libro']  
+                usuario = form_prestamo.cleaned_data['id_usuario']  
+                fecha_prestamo = form_prestamo.cleaned_data['fecha_prestamo']
 
-            try:
-                    nuevo_prestamo.save()
+                nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=fecha_prestamo)
 
-            except IntegrityError as ie:
-                    messages.error(request, str(ie))
-                    return redirect(reverse("prestamos")) 
+                nuevo_prestamo.save()
 
-            messages.info(request,"El prestamo fue guardado correctamente")
+                messages.info(request, "El préstamo fue guardado correctamente")
 
-            return redirect(reverse("prestamos")) 
+                return redirect(reverse("prestamos"))
 
+            except Usuario.DoesNotExist as e:
+                messages.error(request, 'No se encontró el usuario')
+                return redirect(reverse("prestamos"))
+            except Libro.DoesNotExist as e:
+                messages.error(request, 'No se encontró el libro')
+                return redirect(reverse("prestamos"))
+            except IntegrityError as e:
+                messages.error(request, str(e))
+                return redirect(reverse("prestamos"))
         else:
-            errores = form.errors
+            errores = form_prestamo.errors
             print(errores)
-            return  render(request, 'core/prestamos.html', {'form': form, 'errores': errores})
-
+            return render(request, 'core/prestamos.html', {'form': form_prestamo, 'errores': errores})
     else:
       
         form = PrestamoForm()

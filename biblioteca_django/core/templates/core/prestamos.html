@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="{% static 'core/css/form.css' %}">
 {%endblock%}
 <body>
-  <div class="formularioModificacion">
-  <h1>Préstamo de Libros</h1>
-  <form method="post" action="{% url 'prestamos_form' %}">
-    {% csrf_token %}
   {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -17,6 +13,11 @@
       {% endfor %}
     </ul>
   {% endif %}  
+  <div class="formularioModificacion">
+  <h1>Préstamo de Libros</h1>
+  <form method="post" action="{% url 'prestamos_form' %}">
+    {% csrf_token %}
+  
     <!-- Campo Título del Libro -->
     <div>
         {{ form.titulo.label_tag }}

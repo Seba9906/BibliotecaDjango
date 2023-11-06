@@ -81,10 +81,13 @@ def AltaLibro(request):
     
     if request.method == 'POST':
 
-        FormularioAlta = AltaLibroForm(request.POST, request.FILES) #necesito el request files para cargar la caratula del altalibro
-
+        FormularioAlta = AltaLibroForm(request.POST, request.FILES) 
         if FormularioAlta.is_valid():  # Correcto aquí
-            FormularioAlta.save()
+            numero = FormularioAlta.cleaned_data['cantidad']
+            print(numero)
+            for i in range(1,numero+1):
+                FormularioAlta.save()
+                FormularioAlta = AltaLibroForm(request.POST, request.FILES) 
             messages.info(request, "Su operacion fue ejecutada con exito")
             return redirect(reverse("altaLibro")) 
     else:    

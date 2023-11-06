@@ -50,11 +50,14 @@ class RegistroUsuarioForm(forms.ModelForm):
 
 class AltaLibroForm(forms.ModelForm):
     
-
+    cantidad = forms.IntegerField(label='Cantidad de ejemplares')
     class Meta:
         model = Libro
         fields = '__all__'
-
+    def clean_numero(self):
+        if self.cleaned_data["Stock"] >0:
+            raise ValidationError("La cantidad debe ser mayor a 1")
+        return self.cleaned_data["numero"] 
     def clean_Stock(self):
         if self.cleaned_data["Stock"] > 20:
             raise ValidationError("El stock maximo para cada libro es de 20 unidades por titulo")

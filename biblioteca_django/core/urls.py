@@ -1,7 +1,6 @@
 from django.urls import path, include
 from . import views
-from .views import RegistroUsuarioView
-from .views import AutorCreateView
+from .views import RegistroUsuarioView, AutorCreateView, MyLoginView
 from .forms import *
 urlpatterns = [
     path('inicio/', views.index, name="index"),
@@ -15,8 +14,8 @@ urlpatterns = [
     path('prestamos_form', views.prestamo_form,name="prestamos_form"),
     path('registro/', RegistroUsuarioView.as_view(), name="registro"),
     path('Modificacion/AltaAutor',AutorCreateView.as_view(),name="altaAutor"),
-    path('login/',views.login,name="login")
-    
+    path('accounts/login/', MyLoginView.as_view(), name='login'),
+    path('accounts/', include('django.contrib.auth.urls')), 
 ]
 
 

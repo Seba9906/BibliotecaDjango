@@ -17,7 +17,8 @@ GENRE_CHOICES = (
 )
 
 class Usuario(AbstractUser):
-    dni = models.IntegerField('DNI', unique=True)
+    dni = models.IntegerField('DNI', unique=True, null=True, blank=True)
+
          
 class Autor(models.Model):
       nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")

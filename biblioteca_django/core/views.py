@@ -1,13 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from datetime import datetime
 from core.forms import *
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
-from django.views.generic import TemplateView
 from .models import Prestamo, Autor, Libro
 from django.db import IntegrityError
 
@@ -198,11 +196,9 @@ class AutorCreateView(CreateView):
     
 # ---------------------------------------------------------------------------------------------------------------------------------
 
-def login(request):
-    if request.method == 'POST':
-        return render(request,'core/index.html')
-    return render(request,'core/login.html')
-
+class MyLoginView(LoginView):
+    template_name = 'core/registration/login.html'
+    
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 

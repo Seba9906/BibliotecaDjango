@@ -30,15 +30,33 @@ def prestamo_form(request):
         form_prestamo = PrestamoForm(request.POST)
         if form_prestamo.is_valid():
             try:
-                libro = form_prestamo.cleaned_data['id_libro']  
-                usuario = form_prestamo.cleaned_data['id_usuario']  
-                fecha_prestamo = form_prestamo.cleaned_data['fecha_prestamo']
+                
+                libro_id=form_prestamo.cleaned_data['id_libro']
+                print('id libro')
+                print(form_prestamo.cleaned_data['id_libro'])
+                libro = Libro.objects.get(pk=libro_id)
+                print(libro.titulo)
+            except Libro.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el libro')
+                    return redirect(reverse("prestamos")) 
+            id_usuario=form_prestamo.cleaned_data['id_usuario']
+            try:
+                usuario = Usuario.objects.get(id=id_usuario)
+            except Usuario.DoesNotExist as ie:
+                    messages.error(request,'No se encontró el usuario')
+                    return redirect(reverse("prestamos")) 
+            print(form_prestamo.cleaned_data['fecha_prestamo'])
+            #fecha_pres=datetime.str.strptime(form_prestamo.cleaned_data['fecha_prestamo'],"%Y-%m-%d") 
+            nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=form_prestamo.cleaned_data['fecha_prestamo'])
 
-                nuevo_prestamo = Prestamo(libro=libro, usuario=usuario, fecha_prestamo=fecha_prestamo)
+            try:
+                    nuevo_prestamo.save()
 
-                nuevo_prestamo.save()
+            except IntegrityError as ie:
+                    messages.error(request, str(ie))
+                    return redirect(reverse("prestamos")) 
 
-                messages.info(request, "El préstamo fue guardado correctamente")
+            messages.info(request,"El prestamo fue guardado correctamente")
 
                 return redirect(reverse("prestamos"))
 
@@ -71,10 +89,13 @@ def AltaLibro(request):
     
     if request.method == 'POST':
 
-        FormularioAlta = AltaLibroForm(request.POST, request.FILES) #necesito el request files para cargar la caratula del altalibro
-
+        FormularioAlta = AltaLibroForm(request.POST, request.FILES) 
         if FormularioAlta.is_valid():  # Correcto aquí
-            FormularioAlta.save()
+            numero = FormularioAlta.cleaned_data['cantidad']
+            print(numero)
+            for i in range(1,numero+1):
+                FormularioAlta.save()
+                FormularioAlta = AltaLibroForm(request.POST, request.FILES) 
             messages.info(request, "Su operacion fue ejecutada con exito")
             return redirect(reverse("altaLibro")) 
     else:    

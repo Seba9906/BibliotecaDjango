@@ -1,6 +1,7 @@
 from django import forms
 from datetime import datetime
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
 from datetime import date  
 from .models import *
 import re
@@ -10,41 +11,23 @@ import re
 
 
 
-class RegistroUsuarioForm(forms.ModelForm):
+class RegistroUsuarioForm(UserCreationForm):
+    email = forms.EmailField(required=True,label='Correo electronico')
+    first_name = forms.CharField(required=True,label='Nombre Completo')
+    last_name = forms.CharField(required=True,label='Apellido Completo')
 
-    contraseña = forms.CharField(widget=forms.PasswordInput)
-    confirmar_contraseña = forms.CharField(widget=forms.PasswordInput)
-
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = Usuario
-        fields = '__all__'
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email', 'dni',)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        contraseña = cleaned_data.get("contraseña")
-        confirmar_contraseña = cleaned_data.get("confirmar_contraseña")
-        if contraseña and confirmar_contraseña:
-            if contraseña != confirmar_contraseña:
-                raise ValidationError("Las contraseñas no coinciden")
-        return cleaned_data
-
-    def clean_nombre(self):
-        nombre = self.cleaned_data.get('nombre')
-        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', nombre):
-            raise ValidationError('Nombre inválido.')
-        return nombre
-
-    def clean_apellido(self):
-        apellido = self.cleaned_data.get('apellido')
-        if not re.match(r'^[a-zA-Z\s\-\'áéíóúÁÉÍÓÚñÑ]+$', apellido):
-            raise ValidationError('Apellido inválido.')
-        return apellido
-
-    def clean_dni(self):
-        dni = self.cleaned_data.get('dni')
-        if len(str(dni)) != 8:
-            raise ValidationError("El DNI debe contener exactamente 8 dígitos")
-        return dni
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        if commit:
+            user.save()
+        return user
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 

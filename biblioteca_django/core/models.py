@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
 from datetime import timedelta
 import re
 
@@ -15,13 +16,8 @@ GENRE_CHOICES = (
     ('ACAD', 'Artículos Académicos'),
 )
 
-class Usuario(models.Model):
-      
-      nombre = models.CharField(max_length=30,verbose_name="nombre")
-      apellido = models.CharField(max_length=30,verbose_name="apellido")
-      dni = models.IntegerField(verbose_name="Dni", unique=True)
-      email = models.EmailField(max_length=150, verbose_name="Email")
-      contraseña = models.CharField(max_length=50,verbose_name="contraseña",default="")
+class Usuario(AbstractUser):
+    dni = models.IntegerField('DNI', unique=True)
          
 class Autor(models.Model):
       nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")

@@ -24,7 +24,7 @@ class LibroAdmin(admin.ModelAdmin):
     list_display=('titulo', 'editorial','publicacion','genero') 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'autores':
-            kwargs['queryset'] = Autor.objects.filter(nacimiento__startswith='1').orderby('nombre')
+            kwargs['queryset'] = Autor.objects.filter(nacimiento__startswith='1').order_by('nombre')
         return super().formfield_for_manytomany(db_field, request, **kwargs)       
 
 admin.site.register(Usuario, UsuarioAdmin)

@@ -21,3 +21,24 @@ footer {
   text-align: center;
   width: 100%;
 }
+ul.messages {
+  list-style-type: none;
+  padding-left: 0;
+  width: 300px;
+  margin-top: 15px;
+}
+
+ul.messages li {
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.errorlist{
+  color: red;
+}
+
+ul.messages li.success {
+  background-color: rgba(212, 237, 218, 0.8); /* Color verde claro con transparencia */
+  color: #155724;
+}

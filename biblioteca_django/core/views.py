@@ -194,7 +194,9 @@ class AutorCreateView(CreateView):
 
 class MyLoginView(LoginView):
     template_name = 'core/registration/login.html'
-    
+    def form_valid(self, form):
+        messages.success(self.request, 'Inicio de sesión exitoso.')
+        return super().form_valid(form)
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 

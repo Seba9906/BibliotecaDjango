@@ -165,7 +165,7 @@ def v_prestamos(request):
     lst_prestamos=Prestamo.objects.all()
     prestamos=[]
     for p in lst_prestamos:
-        prestamos.append([p.libro.titulo,p.usuario.nombre+ ' '+p.usuario.apellido,p.fecha_prestamo])
+        prestamos.append([p.libro.titulo,p.usuario.first_name+ ' '+p.usuario.last_name,p.fecha_prestamo])
        
     form_prestamo = PrestamoForm()
     context = {

@@ -20,7 +20,7 @@ class Usuario(AbstractUser):
     dni = models.IntegerField('DNI', unique=True, null=True, blank=True)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.first_name} {self.last_name}"
          
 class Autor(models.Model):
       nombre = models.CharField(max_length=100, verbose_name="Nombre y Apellido del Autor/a")

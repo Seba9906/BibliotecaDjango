@@ -4,12 +4,15 @@ from django.db.models.fields.related import ManyToManyField
 from django.forms.models import ModelMultipleChoiceField
 from django.http.request import HttpRequest
 from core.models import Usuario,Autor,Libro,Prestamo
+from django.contrib.auth.admin import UserAdmin
+from .models import Usuario
 
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('dni' , 'apellido','nombre', 'email', 'contraseña')
-    list_editable = ('apellido', 'nombre', 'email', 'contraseña')
-    list_display_links=['dni']
-    search_fields = ['apellido']
+class UsuarioAdmin(UserAdmin):
+    model = Usuario
+    list_display = ('username', 'email', 'first_name', 'last_name', 'dni', 'is_active', 'is_staff')
+    list_editable = ('is_staff', 'dni')
+    list_display_links = ('username', 'email')
+    search_fields = ('first_name', 'last_name', 'dni')
 
 class AutorAdmin(admin.ModelAdmin):
     list_display = ('nombre','nacimiento', 'pais')

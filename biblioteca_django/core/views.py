@@ -198,6 +198,7 @@ class MyLoginView(LoginView):
         messages.success(self.request, 'Inicio de sesión exitoso.')
         return super().form_valid(form)
 
+
 # ---------------------------------------------------------------------------------------------------------------------------------
 
 #VISTA DE USUARIO Y SUS LIBROS PRESTADOS

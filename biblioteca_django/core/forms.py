@@ -1,7 +1,8 @@
 from django import forms
 from datetime import datetime
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,SetPasswordForm
+from django.contrib.auth import get_user_model
 from datetime import date  
 from .models import *
 import re
@@ -129,4 +130,38 @@ class altaAutor(forms.ModelForm):  # He cambiado "altaAutor" a "AltaAutorForm" p
             raise ValidationError('Nombre del país inválido.')
         return pais
 
+# ---------------------------------------------------------------------------------------------------------------------------------
+
+Usuario = get_user_model()
+class cambioContraseñaForm(SetPasswordForm):
+    new_password1 = forms.CharField(label='Nueva contraseña', widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label='Confirmar nueva contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = Usuario
+        fields = ('username',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+
+        # Verifica si el usuario existe
+        if not Usuario.objects.filter(username=username).exists():
+            raise forms.ValidationError("El usuario no existe.")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        username = self.cleaned_data.get('username')
+        user = Usuario.objects.get(username=username)
+        password = self.cleaned_data.get('new_password1')
+        password_confirmation = self.cleaned_data.get('new_password2')
+
+        if password != password_confirmation:
+            raise forms.ValidationError("Las contraseñas no coinciden.")
+
+        user.set_password(password)
+        if commit:
+            user.save()
+        return user
 # ---------------------------------------------------------------------------------------------------------------------------------

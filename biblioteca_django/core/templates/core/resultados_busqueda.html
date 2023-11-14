@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/listados.css' %}"> 
+{% endblock %}
+{% block title %} Ver Autores {% endblock %}
+
+{% block content %}
+<form method="GET">
+    {{ form.as_p }}
+    <button type="submit">Buscar</button>
+</form>
+
+<h2>Autores</h2>
+<ul class="resultados_busqueda">
+    {% for author in results.autor_results %}
+        <li>{{ author.nombre }}</li>
+    {% empty %}
+        <li>No se encontraron autores con ese nombre.</li>
+    {% endfor %}
+</ul>
+
+<h2>Libros</h2>
+<ul class="resultados_busqueda">
+    {% for book in results.libro_results %}
+        <li>{{ book.titulo }}</li>
+    {% empty %}
+        <li>No se encontraron libros con ese nombre.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

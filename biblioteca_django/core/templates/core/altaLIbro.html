@@ -14,17 +14,32 @@
 </ul>
 {% endif %}
 
-
-
 <form method="post" action="{% url 'altaLibro' %}" enctype="multipart/form-data"> {% comment %} necesitamos este atributo para cargar la caratula {% endcomment %}
     {% csrf_token %}
     <div class="formularioModificacion">
       <h2 class="formulario_titulo">Carga de Libro</h2>
+      <div id="selected_authors"></div>
           {{altaLibro_form}}
       <input type="submit" value="Crear" class="boton">
     </div>   
 </form>
-   
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const autorField = document.querySelector('#id_autores');
+      const selectedAuthorsContainer = document.querySelector('#selected_authors');
+
+      autorField.addEventListener('change', function() {
+          const selectedAuthors = [];
+          for (let i = 0; i < autorField.options.length; i++) {
+              if (autorField.options[i].selected) {
+                  selectedAuthors.push(autorField.options[i].text);
+              }
+          }
+          selectedAuthorsContainer.textContent = `Selected authors: ${selectedAuthors.join(', ')}`;
+      });
+  });
+</script>
 {% endblock %}
 
     

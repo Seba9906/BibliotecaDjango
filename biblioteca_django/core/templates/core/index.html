@@ -2,42 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-  <h1>Bienvenido a la Biblioteca</h1>
-  <p>¿Qué temática deseas consultar?</p>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col mx-2">
-      <div class="card" style="width: 18rem;">
-        <img src="{% static 'core/imagenes/biografias.jpg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Biografias</h5>
-          <p class="card-text"> Descubre la vida fascinante de personas que han dejado huella en la historia. Explora las biografías de líderes, artistas, científicos y más que han inspirado al mundo con sus logros y experiencias de vida.</p>
-          <a href="#" class="btn btn-primary">Ir a biografias</a>
-        </div>
-      </div>
+<div class="mt-5">
+  <h1 class="text-center mb-3">Bienvenido a la Biblioteca</h1>
+
+  <form method="GET" action="{% url 'resultados_busqueda' %}" class="text-center">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+      <input type="text" name="busqueda" placeholder="Buscar en nuestro catálogo por libro o autor" class="form-control dark-input" style="width: 60%; margin: 0 auto;">
     </div>
-    <div class="col mx-2">
-      <div class="card" style="width: 18rem;">
-        <img src="{% static 'core/imagenes/articulos_cientificos.jpg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Articulos Academicos/Cientificos</h5>
-          <p class="card-text">Sumérgete en el mundo del conocimiento académico y científico. Encuentra una amplia gama de artículos y estudios sobre diversos temas, desde avances científicos hasta investigaciones académicas de vanguardia.</p>
-          <a href="#" class="btn btn-primary">Ir a Articulos</a>
-        </div>
-      </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success btn-block" style="width: 20%;">Buscar</button>
     </div>
-    <div class="col mx-2">
-      <div class="card" style="width: 18rem;">
-        <img src="{% static 'core/imagenes/libros.webp' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Libros de referencia</h5>
-          <p class="card-text">Accede a una colección de libros de referencia que te brindarán información confiable y valiosa. Desde diccionarios y enciclopedias hasta manuales de consulta, esta sección te ayudará a resolver tus dudas y ampliar tu conocimiento.</p>
-          <a href="#" class="btn btn-primary">Ir a referencias</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  </form>
 </div>
 {% endblock %}

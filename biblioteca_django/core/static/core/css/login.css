@@ -1,3 +1,4 @@
+
 body {
     background-image: url('/static/core/imagenes/login.png');
     background-size: cover;
@@ -26,6 +27,7 @@ h1 {
 }
 
 .login-container {
+    
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centra el contenido verticalmente */

@@ -12,7 +12,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+            <div class="container-fluid">
             <a class="navbar-brand">Biblioteca Django</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -50,7 +51,7 @@
                     </li>
         
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'usuario_perfil' %}">Perfil de usuario</a>
+                        <a class="nav-link" href="{% url 'usuario_perfil' user_id=user.id %}">Perfil de usuario</a>
                     </li>
         
                     <li class="nav-item">
@@ -62,6 +63,7 @@
                     </li>
 
                 </ul>        
+            </div>
             </div>
         </nav>
         
@@ -82,7 +84,7 @@
         </div>
         
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 {% block content %}
                 {% endblock %}
             </div>

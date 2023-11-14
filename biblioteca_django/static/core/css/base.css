@@ -1,0 +1,51 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background-image: url('/static/core/imagenes/login.png');
+    background-size: cover;
+    background-repeat: space repeat;
+    height: 100vh;
+    background-position: center center;
+    display: flex;
+    flex-direction: column;
+    color: #fff; 
+}
+
+
+.container.mt-4 {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+  background-color: #1e1e1e; /* Cambia el color de fondo a tu preferencia */
+  color: #fff; /* Cambia el color del texto a blanco o el que desees */
+  padding: 0.5vh;
+  text-align: center;
+  width: 100%;
+}
+ul.messages {
+  list-style-type: none;
+  padding-left: 0;
+  width: 300px;
+  margin-top: 15px;
+}
+
+ul.messages li {
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.errorlist{
+  color: red;
+}
+
+ul.messages li.success {
+  background-color: rgba(212, 237, 218, 0.8); /* Color verde claro con transparencia */
+  color: #155724;
+}

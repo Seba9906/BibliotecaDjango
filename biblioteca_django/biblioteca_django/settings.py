@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,7 +76,7 @@ WSGI_APPLICATION = "biblioteca_django.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-     "default": {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "biblioteca_django",
         "USER": "postgres",
@@ -85,7 +86,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'core.Usuario'
+AUTH_USER_MODEL = "core.Usuario"
 
 
 # Password validation
@@ -129,4 +130,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

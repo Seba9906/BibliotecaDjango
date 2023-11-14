@@ -4,65 +4,8 @@
 {% block title %} Mi perfil {% endblock %}
 
 {% block content %}
-
-<div class="container py-3">
-  <h2>Mi perfil</h2>
-
-  <!-- Navegar en menú de usuario -->
-  <section class="row justify-content-between border border-info rounded my-4 p-4">
-    <div class="col-6">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Catálogo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Historial de préstamos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Cerrar sesión</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-6">
-      <img src="..." alt="foto de perfil" />
-      <p>Nombre: {{nombre_usuario}}</p>
-      {% if es_admin %}
-      <p>Rol: Admin</p>
-      {% else %}
-      <p>Rol: usuario</p>
-      {% endif %}
-    </div>
-  </section>
-
-  <section id="mis_libros" class="container">
-    <h2 class="text-center">Libros en préstamo</h2>
-
-    <div class="row py-3">
-
-      {% for libro in libros_prestados %}
-      <div class="col-6 card my-2">
-        <img src="..." class="card-img-top" alt="portada" />
-        <div class="card-body">
-          <h5 class="card-title">{{ libro.titulo }}</h5>
-          <p class="card-text">{{ libro.descripcion_corta }}</p>
-          <a href="#" class="btn btn-primary">Ver detalle</a>
-          <p class="card-text text-muted pt-2 small">
-            Devolución: {{ libro.fecha_devolucion }}
-          </p>
-        </div>
-      </div>
-
-      {% empty %}
-      <p>No tienes libros en préstamo</p>
-
-      {% endfor %}
-      
-    </div>
-  </section>
-</div>
-
+    <h2>User Profile</h2>
+    <p>User ID: {{ user.id }}</p>
+    <p>Username: {{ user.username }}</p>
+    <!-- Add more user profile details as needed -->
 {% endblock %}

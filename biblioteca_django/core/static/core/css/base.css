@@ -5,9 +5,16 @@ body, html {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+    background-image: url('/static/core/imagenes/login.png');
+    background-size: cover;
+    background-repeat: space repeat;
+    height:200vh;
+    background-position: center center;
+    display: flex;
+    flex-direction: column;
+    color: #fff; 
 }
+
 
 .container.mt-4 {
   flex: 1 0 auto;

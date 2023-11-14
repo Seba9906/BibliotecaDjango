@@ -1,38 +1,38 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'core/css/modificacionLibro.css' %}"> 
+  <link rel="stylesheet" href="{% static 'core/css/listados.css' %}"> 
 {% endblock %}
 {% block title %} Ver Autores {% endblock %}
 
 {% block content %}
 <h1>Lista de Libros</h1>
-<table class="table">
+<table class="table table-dark table-hover rounded-10 overflow-hidden">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titulo</th>
-        <th scope="col">Autor/a o Autor@s</th>
-        <th scope="col">Editorial</th>
-        <th scope="col">Año de publicación</th>
-        <th scope="col">Género</th>
-      </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Autor/a o Autor@s</th>
+            <th scope="col">Editorial</th>
+            <th scope="col">Año de publicación</th>
+            <th scope="col">Género</th>
+        </tr>
     </thead>
     <tbody>
-
         {% for libro in libros %}
-        <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ libro.titulo }}</td>
-        <td>{{ libro.autores }}</td>
-        <td>{{ libro.editorial }}</td>
-        <td>{{ libro.publicacion }}</td>
-        <td>{{ libro.genero }}</td>
-        </tr>
+            <tr onclick="window.location='{% url 'libro_detalle' libro.id %}'" style="cursor:pointer;">
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ libro.titulo }}</td>
+                <td>
+                    {% for autor in libro.autores.all %}
+                        {{ autor.nombre }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ libro.editorial }}</td>
+                <td>{{ libro.publicacion }}</td>
+                <td>{{ libro.genero }}</td>
+            </tr>
         {% endfor %}
-    
     </tbody>
-  </table>
-    
-
+</table>
 {% endblock %}

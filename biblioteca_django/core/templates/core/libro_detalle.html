@@ -7,12 +7,17 @@
 
 {% block content %}
 <div class="libro-grid"> <div class="portada">
-<img src="{{ libro.imagen }}" alt="Portada del libro: {{ libro.titulo }}" /></div>
+<img src="{{ libro.imagen.url }}" alt="Portada del libro: {{ libro.titulo }}" /></div>
 <div class="info-basica">
   <h1>{{ libro.titulo }}</h1>
-  <p>Autor: {{ libro.autor }}</p>
-  <p>Año de Publicación: {{ libro.anio_publicacion }}</p>
-  <p>Género: {{ libro.genero }}</p>
+  <p>Autores:
+    {% for autor in libro.autores.all %}
+        {{ autor.nombre }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+  <p>Editorial: {{ libro.editorial }}</p>
+  <p>Año de publicación: {{ libro.publicacion }}</p>
+  <p>Género: {{ libro.get_genero_display }}</p>
 </div> <div class="detalles"> --------------------------------------</div></div>
 
 

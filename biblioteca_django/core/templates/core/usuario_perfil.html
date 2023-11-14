@@ -1,11 +1,23 @@
-{% extends "core/base.html" %} 
+{% extends "core/base.html" %}
 
-{% load static %} 
+{% load static %}
+
 {% block title %} Mi perfil {% endblock %}
 
 {% block content %}
-    <h2>User Profile</h2>
-    <p>User ID: {{ user.id }}</p>
-    <p>Username: {{ user.username }}</p>
-    <!-- Add more user profile details as needed -->
+    <h2><b>Perfil de Usuario - </b>{{ user.username }} </h2>
+    <p>ID de Usuario: {{ user.id }}</p>
+    <p>Nombre Completo: {{ user.get_full_name }}</p>
+    
+    <h3>Libros Prestados</h3>
+    {% if user.libros_prestados.all %}
+        <ul>
+            {% for libro in user.libros_prestados.all %}
+                <li>{{ libro.titulo }} por {{ libro.autores.all|join:", " }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se han prestado libros aún.</p>
+    {% endif %}
+
 {% endblock %}

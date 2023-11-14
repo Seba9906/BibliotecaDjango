@@ -4,11 +4,14 @@ body, html {
   padding: 0;
 }
 
+container mt-4 li {
+  list-style: none;
+}
+
 body {
     background-image: url('/static/core/imagenes/login.png');
     background-size: cover;
     background-repeat: space repeat;
-    height:200vh;
     background-position: center center;
     display: flex;
     flex-direction: column;

@@ -1,14 +1,12 @@
 
 body {
-    background-image: url('/static/core/imagenes/login.png');
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center center;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120vh;
+    height: 100vh;
     margin: 0;
     color: #fff; /* Color de texto blanco */
 }
@@ -18,6 +16,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px; /* Espacio entre elementos del formulario */
+    height:100%
 }
 
 h1 {

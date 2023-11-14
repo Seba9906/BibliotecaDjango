@@ -107,10 +107,10 @@ class ModificacionLibroForm(forms.Form):
 class PrestamoForm(forms.Form):
     # titulo = forms.CharField(label='Título del Libro', max_length=100)
     # autor = forms.CharField(label='Autor', max_length=100, required=True)
-    id_libro = forms.ModelChoiceField(
+    nombre_libro = forms.ModelChoiceField(
         label="Libro",
         queryset=Libro.objects.all(),
-        to_field_name="id",
+        to_field_name="titulo",
         empty_label=None,
     )
     fecha_prestamo = forms.DateField(
@@ -119,10 +119,10 @@ class PrestamoForm(forms.Form):
         widget=forms.widgets.DateInput(attrs={"type": "date"}),
     )
     # nombre_usuario = forms.CharField(label='Nombre del Usuario', max_length=100)
-    id_usuario = forms.ModelChoiceField(
+    nombre_usuario = forms.ModelChoiceField(
         label="Usuario",
         queryset=Usuario.objects.all(),
-        to_field_name="id",
+        to_field_name="username",
         empty_label=None,
     )
 

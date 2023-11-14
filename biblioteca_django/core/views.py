@@ -34,13 +34,8 @@ def prestamo_form(request):
         form_prestamo = PrestamoForm(request.POST)
         if form_prestamo.is_valid():
             try:
-                libro_id = form_prestamo.cleaned_data["id_libro"]
-                print("ID del libro:", libro_id)  # Mantengo este print para depuración
-                libro = Libro.objects.get(pk=libro_id)
-                print("Libro:", libro.titulo)  # Mantengo este print para depuración
-
-                usuario_id = form_prestamo.cleaned_data["id_usuario"]
-                usuario = Usuario.objects.get(id=usuario_id)
+                libro = form_prestamo.cleaned_data["nombre_libro"]
+                usuario = form_prestamo.cleaned_data["nombre_usuario"]
 
                 nuevo_prestamo = Prestamo(
                     libro=libro,
@@ -53,20 +48,14 @@ def prestamo_form(request):
 
             except Libro.DoesNotExist:
                 messages.error(request, "No se encontró el libro")
-                print("No se encontró el libro")  # Mantengo este print para depuración
             except Usuario.DoesNotExist:
                 messages.error(request, "No se encontró el usuario")
-                print(
-                    "No se encontró el usuario"
-                )  # Mantengo este print para depuración
             except IntegrityError as e:
                 messages.error(request, str(e))
-                print("Error de integridad:", e)  # Mantengo este print para depuración
 
             return redirect(reverse("prestamos"))
         else:
             errores = form_prestamo.errors
-            print("Errores:", errores)  # Mantengo este print para depuración
             return render(
                 request,
                 "core/prestamos.html",

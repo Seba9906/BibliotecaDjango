@@ -1,5 +1,6 @@
 
 body {
+    background-image: url('/static/core/imagenes/login.png');
     background-size: cover;
     background-position: center center;
     font-family: Arial, sans-serif;
@@ -7,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    margin: 10vh;
     color: #fff; /* Color de texto blanco */
 }
 

@@ -7,7 +7,8 @@ from datetime import date
 from .models import *
 import re
 from unidecode import unidecode
-
+from django.db.models import F
+from django.utils import timezone
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -107,10 +108,21 @@ class ModificacionLibroForm(forms.Form):
 class PrestamoForm(forms.Form):
     # titulo = forms.CharField(label='Título del Libro', max_length=100)
     # autor = forms.CharField(label='Autor', max_length=100, required=True)
-    nombre_libro = forms.ModelChoiceField(
+    
+    id_libro = forms.ModelChoiceField(
         label="Libro",
-        queryset=Libro.objects.all(),
-        to_field_name="titulo",
+        queryset=Libro.objects.filter(
+            id__in=Libro.objects.exclude(
+                prestamo__fecha_devolucion__gt=timezone.now()
+        ).values('titulo')
+                .annotate(first_id=F('id'))
+                .order_by('titulo', 'first_id')
+                .distinct('titulo')
+                .values('id')
+        ),
+        
+        #queryset=Libro.objects.all(),
+        to_field_name="id",
         empty_label=None,
     )
     fecha_prestamo = forms.DateField(

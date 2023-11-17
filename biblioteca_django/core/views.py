@@ -31,13 +31,22 @@ class RegistroUsuarioView(CreateView):
 
 def prestamo_form(request):
     if request.method == "POST":
+        print(request.POST
+              )
         form_prestamo = PrestamoForm(request.POST)
+       
         if form_prestamo.is_valid():
             try:
-                libro = form_prestamo.cleaned_data["nombre_libro"]
+                libro = form_prestamo.cleaned_data["id_libro"]
+                id= request.POST.get('id_libro')
+                print(id)
+                libro = Libro.objects.get(id=id)
+                
                 usuario = form_prestamo.cleaned_data["nombre_usuario"]
-
+                #print(usuario)
+                print('hola')
                 nuevo_prestamo = Prestamo(
+                    #libro=libro,
                     libro=libro,
                     usuario=usuario,
                     fecha_prestamo=form_prestamo.cleaned_data["fecha_prestamo"],

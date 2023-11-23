@@ -31,7 +31,7 @@
                                 <li><a class="dropdown-item" href="{% url 'listaLibro' %}">Lista de Libros</a></li>
                                 {% if request.user.is_staff or request.user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'altaLibro' %}">Carga de Libro</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'modificacionLibro' %}">Modificar Libro</a></li>
+
                                 {% endif %}
                             </ul>
                         </li>

@@ -47,25 +47,6 @@ class AltaLibroForm(forms.ModelForm):
         model = Libro
         fields = "__all__"
 
-    def clean(self):
-        cleaned_data = super().clean()
-        titulo = cleaned_data.get("titulo")
-
-        titulo = unidecode(titulo).lower()
-
-        libro_existente = (
-            Libro.objects.filter(titulo__iexact=titulo)
-            .exclude(pk=self.instance.pk)
-            .first()
-        )
-
-        if libro_existente:
-            raise forms.ValidationError(
-                "El libro con este título ya existe en la base de datos"
-            )
-
-        return cleaned_data
-
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -106,22 +87,16 @@ class ModificacionLibroForm(forms.Form):
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 class PrestamoForm(forms.Form):
-    # titulo = forms.CharField(label='Título del Libro', max_length=100)
-    # autor = forms.CharField(label='Autor', max_length=100, required=True)
-    
     id_libro = forms.ModelChoiceField(
         label="Libro",
         queryset=Libro.objects.filter(
-            id__in=Libro.objects.exclude(
-                prestamo__fecha_devolucion__gt=timezone.now()
-        ).values('titulo')
-                .annotate(first_id=F('id'))
-                .order_by('titulo', 'first_id')
-                .distinct('titulo')
-                .values('id')
+            id__in=Libro.objects.exclude(prestamo__fecha_devolucion__gt=timezone.now())
+            .values("titulo")
+            .annotate(first_id=F("id"))
+            .order_by("titulo", "first_id")
+            .distinct("titulo")
+            .values("id")
         ),
-        
-        #queryset=Libro.objects.all(),
         to_field_name="id",
         empty_label=None,
     )
@@ -130,7 +105,6 @@ class PrestamoForm(forms.Form):
         initial=date.today(),
         widget=forms.widgets.DateInput(attrs={"type": "date"}),
     )
-    # nombre_usuario = forms.CharField(label='Nombre del Usuario', max_length=100)
     nombre_usuario = forms.ModelChoiceField(
         label="Usuario",
         queryset=Usuario.objects.all(),

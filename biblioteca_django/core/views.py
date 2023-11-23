@@ -31,22 +31,16 @@ class RegistroUsuarioView(CreateView):
 
 def prestamo_form(request):
     if request.method == "POST":
-        print(request.POST
-              )
         form_prestamo = PrestamoForm(request.POST)
-       
+
         if form_prestamo.is_valid():
             try:
                 libro = form_prestamo.cleaned_data["id_libro"]
-                id= request.POST.get('id_libro')
-                print(id)
+                id = request.POST.get("id_libro")
                 libro = Libro.objects.get(id=id)
-                
+
                 usuario = form_prestamo.cleaned_data["nombre_usuario"]
-                #print(usuario)
-                print('hola')
                 nuevo_prestamo = Prestamo(
-                    #libro=libro,
                     libro=libro,
                     usuario=usuario,
                     fecha_prestamo=form_prestamo.cleaned_data["fecha_prestamo"],
@@ -90,7 +84,6 @@ def AltaLibro(request):
         FormularioAlta = AltaLibroForm(request.POST, request.FILES)
         if FormularioAlta.is_valid():  # Correcto aquí
             numero = FormularioAlta.cleaned_data["cantidad"]
-            print(numero)
             for i in range(1, numero + 1):
                 FormularioAlta.save()
                 FormularioAlta = AltaLibroForm(request.POST, request.FILES)
@@ -102,25 +95,6 @@ def AltaLibro(request):
     context = {"altaLibro_form": FormularioAlta}
 
     return render(request, "core/altaLibro.html", context)
-
-
-# ---------------------------------------------------------------------------------------------------------------------------------
-
-
-def modificacionLibro(request):
-    if request.method == "POST":
-        FormularioModificacion = ModificacionLibroForm(request.POST)
-
-        if FormularioModificacion.is_valid():
-            messages.info(request, "Su operacion fue ejecutada con exito")
-
-            return redirect(reverse("modificacionLibro"))
-
-    else:
-        FormularioModificacion = ModificacionLibroForm()
-
-    context = {"modificacionLibro_form": FormularioModificacion}
-    return render(request, "core/modificacionLibro.html", context)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------
@@ -215,6 +189,7 @@ def usuario_perfil(request, user_id):
 
 # ---------------------------------------------------------------------------------------------------------------------------------
 
+
 def resultados_busqueda(request):
     form = Buscador(request.GET or None)
     results = {
@@ -241,4 +216,6 @@ def resultados_busqueda(request):
     return render(
         request, "core/resultados_busqueda.html", {"form": form, "results": results}
     )
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------

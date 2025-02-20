@@ -14,14 +14,23 @@
     <div class="login-container">
         <h1>Login Biblioteca Django</h1>
 
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
+
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+        {{ form.non_field_errors }} 
             <label for="id_username" class="visually-hidden">Nombre de usuario:</label>
             <input type="text" name="username" placeholder="Nombre de usuario" id="id_username">
+        {% if form.username.errors %}
+            <div class="errorlist">{{ form.username.errors.as_text }}</div>
+        {% endif %}
             <label for="id_password" class="visually-hidden">Contraseña:</label>
             <input type="password" name="password" placeholder="Contraseña" id="id_password">
+        {% if form.password.errors %}
+            <div class="errorlist">{{ form.password.errors.as_text }}</div>
+        {% endif %}
             <input type="submit" value="Iniciar sesión">
-        </form>
+    </form>
+
 
         <div class="registro">
             <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>

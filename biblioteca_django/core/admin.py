@@ -29,7 +29,7 @@ class LibroAdmin(admin.ModelAdmin):
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Autor, AutorAdmin)
-admin.site.register(Libro)
+admin.site.register(Libro,LibroAdmin)
 admin.site.register(Prestamo)
 
 # Register your models here.

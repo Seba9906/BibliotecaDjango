@@ -173,7 +173,6 @@ class cambioContraseñaForm(SetPasswordForm):
         cleaned_data = super().clean()
         username = cleaned_data.get("username")
 
-        # Verifica si el usuario existe
         if not Usuario.objects.filter(username=username).exists():
             raise forms.ValidationError("El usuario no existe.")
 

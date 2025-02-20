@@ -82,7 +82,7 @@ def index(request):
 def AltaLibro(request):
     if request.method == "POST":
         FormularioAlta = AltaLibroForm(request.POST, request.FILES)
-        if FormularioAlta.is_valid():  # Correcto aquí
+        if FormularioAlta.is_valid():  
             numero = FormularioAlta.cleaned_data["cantidad"]
             for i in range(1, numero + 1):
                 FormularioAlta.save()
